@@ -3,1069 +3,535 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EEI · Análisis de Programa Hotelero · Acttiv</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Evaluador SEI Exterior · Acttiv</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --orange:#E85D24; --orange-l:#F5784A; --orange-dim:rgba(232,93,36,.12); --orange-soft:#FDEDE2;
-  --forest:#1C3A2F; --forest-l:#2A5244; --forest-dim:rgba(28,58,47,.1);
-  --teal:#00BAC4;
-  --bg:#F7F6F3; --surface:#FFFFFF; --border:#E8E5E0; --border2:#D4CFC8;
-  --text:#1A1714; --text2:#4A4540; --text3:#8A847C; --text4:#B5B0A8;
-  --sid:248px; --r:10px;
-  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.05);
-  --sh-lg:0 8px 24px rgba(0,0,0,.10),0 2px 6px rgba(0,0,0,.06);
-}
-body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;overflow-x:hidden}
-
-/* ── SETUP OVERLAY ── */
-.setup-overlay{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
-.setup-card{background:var(--surface);border-radius:20px;padding:36px 40px;max-width:560px;width:100%;box-shadow:var(--sh-lg);margin:auto}
-.setup-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
-.setup-logo-box{width:38px;height:38px;background:var(--orange);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.setup-name{font-size:17px;font-weight:700}
-.setup-sub-name{font-size:10px;color:var(--text3);margin-top:1px}
-.setup-headline{font-size:22px;font-weight:700;margin-bottom:6px}
-.setup-desc{font-size:12.5px;color:var(--text3);margin-bottom:28px;line-height:1.65}
-.field{margin-bottom:16px}
-.field-label{font-size:10.5px;font-weight:600;color:var(--text2);margin-bottom:5px;display:block}
-.fi,.fs{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins';font-size:12.5px;color:var(--text);background:var(--surface);outline:none;transition:.15s;appearance:none}
-.fi:focus,.fs:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-dim)}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-.chip{padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:11.5px;cursor:pointer;transition:.15s;user-select:none;background:var(--surface);color:var(--text2)}
-.chip:hover{border-color:var(--orange);color:var(--orange)}
-.chip.on{border-color:var(--orange);background:var(--orange-dim);color:var(--orange);font-weight:600}
-.esg-row{display:flex;gap:8px;margin-top:4px}
-.esg-opt{flex:1;text-align:center;padding:8px 6px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:11.5px;transition:.15s;user-select:none}
-.esg-opt:hover{border-color:var(--border2)}
-.esg-opt.on{border-color:var(--forest);background:var(--forest-dim);color:var(--forest);font-weight:600}
-.setup-btn{width:100%;margin-top:24px;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-family:'Poppins';font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
-.setup-btn:hover{background:var(--orange-l)}
-
-/* ── MAIN LAYOUT ── */
-.layout{display:flex;min-height:100vh}
-.sidebar{width:var(--sid);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;display:flex;flex-direction:column;z-index:10}
-.logo-area{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
-.logo-row{display:flex;align-items:center;gap:8px}
-.logo-box{width:28px;height:28px;background:var(--orange);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-n{font-size:14px;font-weight:700}
-.logo-s{font-size:9.5px;color:var(--text3);margin-top:1px}
-.hotel-panel{margin:10px;padding:12px;background:var(--bg);border-radius:var(--r);border:1px solid var(--border)}
-.hp-name{font-size:12px;font-weight:600;margin-bottom:2px}
-.hp-meta{font-size:10.5px;color:var(--text3);line-height:1.5}
-.hp-change{margin-top:8px;font-size:10.5px;color:var(--orange);cursor:pointer;text-decoration:underline;background:none;border:none;padding:0;font-family:'Poppins'}
-.hp-change:hover{color:var(--orange-l)}
-.nav{padding:8px;flex:1}
-.nav-lbl{font-size:9px;font-weight:600;color:var(--text4);text-transform:uppercase;letter-spacing:.7px;padding:10px 8px 4px}
-.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;font-size:12px;color:var(--text2);cursor:pointer;transition:.12s;background:none;border:none;width:100%;text-align:left;font-family:'Poppins'}
-.nav-item:hover{background:var(--bg);color:var(--text)}
-.nav-item.on{background:var(--orange-dim);color:var(--orange);font-weight:500}
-.nav-item svg{width:14px;height:14px;flex-shrink:0;opacity:.7}
-.nav-item.on svg{opacity:1}
-.sid-footer{padding:12px 16px;border-top:1px solid var(--border);font-size:9.5px;color:var(--text4)}
-.sid-footer span{color:var(--orange);font-weight:600}
-.main{margin-left:var(--sid);flex:1;display:flex;flex-direction:column;min-height:100vh}
-.topbar{display:flex;align-items:center;gap:12px;padding:12px 24px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:9}
-.topbar-title{font-size:13px;font-weight:600;flex:1}
-.topbar-hotel{font-size:11px;color:var(--text3);background:var(--bg);padding:4px 11px;border-radius:20px;border:1px solid var(--border)}
-.content{padding:24px;flex:1;max-width:1080px}
-
-/* ── MODE TABS ── */
-.mode-tabs{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
-.mode-tab{flex:1;padding:13px 16px;text-align:center;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text2);border:none;background:none;font-family:'Poppins';transition:.15s;border-right:1px solid var(--border)}
-.mode-tab:last-child{border-right:none}
-.mode-tab:hover{background:var(--bg)}
-.mode-tab.on{background:var(--orange-dim);color:var(--orange);font-weight:600}
-.tab-icon{font-size:17px;display:block;margin-bottom:3px}
-.tab-name{display:block}
-.tab-desc{display:block;font-size:10px;color:var(--text4);margin-top:2px;font-weight:400}
-.mode-tab.on .tab-desc{color:var(--orange);opacity:.7}
-.panel{display:none}
-.panel.on{display:block}
-
-/* ── UPLOAD ── */
-.upload-zone{border:2px dashed var(--border2);border-radius:14px;padding:48px 24px;text-align:center;cursor:pointer;transition:.2s;background:var(--surface);margin-bottom:14px}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--orange);background:var(--orange-soft)}
-.upload-zone.has-file{border-color:var(--forest);border-style:solid;background:var(--forest-dim)}
-.up-icon{font-size:42px;margin-bottom:12px;display:block}
-.up-title{font-size:15px;font-weight:600;margin-bottom:6px}
-.up-desc{font-size:12px;color:var(--text3);margin-bottom:16px;line-height:1.65}
-.up-fname{font-size:12px;font-weight:600;color:var(--forest);background:rgba(28,58,47,.1);padding:6px 14px;border-radius:20px;display:inline-block}
-.up-cta{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins';font-size:12px;font-weight:500;cursor:pointer;transition:.15s}
-.up-cta:hover{border-color:var(--orange);color:var(--orange)}
-#file-input{display:none}
-.run-btn{width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-family:'Poppins';font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;margin-bottom:18px}
-.run-btn:hover:not(:disabled){background:var(--orange-l)}
-.run-btn:disabled{opacity:.4;cursor:not-allowed}
-
-/* ── LOADING ── */
-.loading-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 20px;margin-bottom:18px;display:none}
-.loading-box.on{display:block}
-.ls{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:12.5px;color:var(--text4)}
-.ls.done{color:var(--forest)}
-.ls.active{color:var(--text);font-weight:500}
-.ls-dot{width:18px;height:18px;border-radius:50%;background:var(--border);flex-shrink:0;transition:.3s}
-.ls.done .ls-dot{background:var(--forest)}
-.ls.active .ls-dot{background:var(--orange);animation:pulse .8s infinite}
-.ls-check{color:var(--forest);font-size:16px;width:18px;text-align:center;flex-shrink:0}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-
-/* ── RESULTS ── */
-.results{display:none}
-.results.on{display:block}
-.result-header{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:13px;box-shadow:var(--sh)}
-.rh-icon{width:40px;height:40px;background:var(--orange-soft);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.rh-hotel{font-size:14px;font-weight:600}
-.rh-meta{font-size:11px;color:var(--text3);margin-top:2px}
-.rh-note{font-size:11px;color:var(--text3);font-style:italic;margin-top:3px}
-.rh-badge{margin-left:auto;background:var(--forest);color:#fff;font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;flex-shrink:0}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.rcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
-.rc-lbl{font-size:9.5px;font-weight:600;color:var(--text4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-
-/* ── RADAR ── */
-.radar-wrap{display:flex;justify-content:center;align-items:center}
-
-/* ── DIST ── */
-.dist-bar{height:26px;border-radius:7px;overflow:hidden;display:flex;margin-bottom:10px}
-.dist-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;transition:width .6s}
-.dist-legend{display:flex;gap:12px;flex-wrap:wrap}
-.dist-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
-.dist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.count-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.cpill{font-size:10.5px;font-weight:500;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text2)}
-
-/* ── PULSO SCORE ── */
-.pulso-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
-.pulso-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.pulso-title{font-size:13px;font-weight:600}
-.pulso-num{font-size:26px;font-weight:700;color:var(--orange);line-height:1}
-.pulso-num small{font-size:12px;color:var(--text3);font-weight:400}
-.brow{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--border)}
-.brow:first-of-type{border-top:none}
-.blbl{width:28px;height:28px;border-radius:7px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.blbl.analyzed{background:var(--orange-dim);color:var(--orange)}
-.blbl.pending{background:var(--bg);color:var(--text4)}
-.binfo{flex:1;min-width:0}
-.bname{font-size:12px;font-weight:600}
-.bbar{height:5px;background:var(--bg);border-radius:10px;margin:4px 0;overflow:hidden}
-.bfill{height:100%;border-radius:10px;transition:width .7s}
-.bfill.analyzed{background:var(--orange)}
-.bdesc{font-size:10px;color:var(--text3)}
-.bpts{font-size:12px;font-weight:600;flex-shrink:0;width:38px;text-align:right}
-.bpts.analyzed{color:var(--orange)}
-.bpts.pending{color:var(--text4)}
-.btag{font-size:9.5px;flex-shrink:0;padding:2px 8px;border-radius:10px}
-.btag.ok{background:#e8f5e9;color:#2e7d32;font-weight:600}
-.btag.pend{background:var(--bg);color:var(--text4)}
-.pulso-note{margin-top:14px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--text3);line-height:1.65;border-left:2px solid var(--border2)}
-.pulso-note strong{color:var(--text2)}
-
-/* ── SIGNALS ── */
-.signals-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:16px;box-shadow:var(--sh)}
-.signal{padding:12px 14px;background:var(--bg);border-radius:9px;margin-bottom:8px;border-left:3px solid var(--orange)}
-.signal:last-child{margin-bottom:0}
-.signal.opp{border-left-color:var(--forest)}
-.signal-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--orange);margin-bottom:4px}
-.signal.opp .signal-lbl{color:var(--forest)}
-.signal-text{font-size:12.5px;color:var(--text2);line-height:1.65}
-
-/* ── NARRATIVE ── */
-.narr-card{background:#fffbf8;border:1px solid rgba(232,93,36,.2);border-radius:var(--r);padding:18px;margin-bottom:16px;display:none}
-.narr-card.on{display:block}
-.narr-head{display:flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px}
-.narr-body{font-size:12.5px;color:var(--text2);line-height:1.75}
-.narr-body p{margin-bottom:8px}
-.narr-body p:last-child{margin-bottom:0}
-
-/* ── CTA BANNER ── */
-.cta-banner{background:linear-gradient(135deg,var(--forest) 0%,var(--forest-l) 100%);border-radius:16px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;gap:20px}
-.cta-ico{width:50px;height:50px;background:rgba(255,255,255,.15);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.cta-body{flex:1}
-.cta-eyebrow{font-size:10px;font-weight:600;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.cta-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px}
-.cta-desc{font-size:12px;color:rgba(255,255,255,.7);line-height:1.55}
-.cta-btn{background:var(--orange);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-family:'Poppins';font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;flex-shrink:0}
-.cta-btn:hover{background:var(--orange-l)}
-
-/* ── MODE A ── */
-.act-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
-.act-lbl{font-size:10.5px;font-weight:600;color:var(--text2);margin-bottom:5px;display:block}
-.act-ta{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins';font-size:12.5px;resize:none;outline:none;transition:.15s;min-height:80px}
-.act-ta:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-dim)}
-.act-run{width:100%;margin-top:12px;padding:11px;background:var(--orange);color:#fff;border:none;border-radius:9px;font-family:'Poppins';font-size:12.5px;font-weight:600;cursor:pointer;transition:.15s}
-.act-run:hover:not(:disabled){background:var(--orange-l)}
-.act-run:disabled{opacity:.4;cursor:not-allowed}
-.act-result{background:linear-gradient(135deg,var(--forest) 0%,var(--forest-l) 100%);border-radius:var(--r);padding:22px;color:#fff;margin-top:14px;display:none}
-.act-result.on{display:block}
-.ise-big{font-size:46px;font-weight:700;line-height:1;margin-bottom:3px}
-.ise-lbl{font-size:11px;opacity:.7;margin-bottom:14px}
-.ise-rating{display:inline-block;background:rgba(255,255,255,.15);padding:3px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:14px}
-.ise-text{font-size:12.5px;line-height:1.7;opacity:.85}
-
-/* ── HISTORY ── */
-.hist-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.hist-ico{font-size:20px;flex-shrink:0}
-.hist-info{flex:1}
-.hist-hotel{font-size:12.5px;font-weight:600}
-.hist-meta{font-size:10.5px;color:var(--text3);margin-top:2px}
-.hist-score{font-size:18px;font-weight:700;color:var(--orange);flex-shrink:0}
-.hist-score small{font-size:10px;color:var(--text3);font-weight:400}
-.hist-empty{text-align:center;padding:48px;color:var(--text4)}
-.hist-empty svg{width:40px;height:40px;margin:0 auto 12px;display:block;opacity:.35}
-.hist-empty p{font-size:12.5px;line-height:1.65}
-
-/* ── CONTACT MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;display:none}
-.modal-overlay.on{display:flex}
-.modal{background:var(--surface);border-radius:16px;padding:32px;max-width:460px;width:100%;box-shadow:var(--sh-lg);position:relative}
-.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:'Poppins'}
-.modal-title{font-size:18px;font-weight:700;margin-bottom:4px}
-.modal-sub{font-size:12.5px;color:var(--text3);margin-bottom:22px;line-height:1.6}
-.modal-btn{width:100%;padding:13px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-family:'Poppins';font-size:13px;font-weight:600;cursor:pointer;margin-top:18px;transition:.15s}
-.modal-btn:hover{background:var(--orange-l)}
-.modal-success{text-align:center;padding:20px 0;display:none}
-.modal-success.on{display:block}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:20px;right:20px;z-index:999;background:var(--text);color:#fff;padding:10px 16px;border-radius:9px;font-size:12px;font-weight:500;transform:translateY(60px);opacity:0;transition:.3s;pointer-events:none;max-width:280px}
-.toast.on{transform:translateY(0);opacity:1}
-.toast.success{background:var(--forest)}
-.toast.error{background:#dc2626}
-
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px}
-
-@media(max-width:768px){
-  .sidebar{display:none}.main{margin-left:0}
-  .grid2{grid-template-columns:1fr}.cta-banner{flex-direction:column;text-align:center}
-  .field-row{grid-template-columns:1fr}
-}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:#fff;color:#1a1a1a;min-height:100vh;}
+.wrap{max-width:700px;margin:0 auto;padding:28px 24px;}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #f0f0f0;}
+.logo{font-size:16px;font-weight:700;letter-spacing:-.02em;}
+.logo span{color:#E85D24;}
+.sei-tag{background:#E85D24;color:#fff;font-size:10px;font-weight:700;padding:4px 11px;border-radius:20px;letter-spacing:.05em;}
+.toggle{display:flex;background:#f5f5f5;border-radius:10px;padding:3px;gap:2px;margin-bottom:24px;}
+.tgl{flex:1;padding:9px 10px;border:none;background:none;border-radius:8px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;color:#999;}
+.tgl.on{background:#fff;color:#1a1a1a;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.lbl{font-size:10.5px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;}
+.field{margin-bottom:16px;}
+input,select,textarea{width:100%;border:1px solid #e8e8e8;border-radius:9px;padding:10px 13px;font-family:'Poppins',sans-serif;font-size:13px;color:#1a1a1a;outline:none;transition:border .15s;background:#fff;}
+input:focus,select:focus,textarea:focus{border-color:#E85D24;}
+textarea{resize:vertical;}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.hint{background:rgba(232,93,36,.05);border:1px solid rgba(232,93,36,.15);border-radius:10px;padding:13px 16px;margin-bottom:20px;font-size:12.5px;color:#7c2d12;line-height:1.65;}
+.crit{border:1px solid #f0f0f0;border-radius:13px;padding:18px;margin-bottom:12px;transition:border .15s;}
+.crit.scored{border-color:rgba(232,93,36,.35);}
+.crit-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.crit-ico{width:34px;height:34px;background:#f5f5f5;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.crit-name{font-size:13.5px;font-weight:600;}
+.crit-sc{margin-left:auto;font-size:11px;font-weight:700;color:#E85D24;background:rgba(232,93,36,.08);padding:3px 9px;border-radius:10px;}
+.opts{display:flex;flex-direction:column;gap:7px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border:1px solid #f0f0f0;border-radius:9px;cursor:pointer;transition:all .15s;user-select:none;}
+.opt:hover{border-color:#E85D24;background:rgba(232,93,36,.03);}
+.opt.sel{border-color:#E85D24;background:rgba(232,93,36,.06);}
+.radio{width:17px;height:17px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;margin-top:2px;transition:all .15s;position:relative;}
+.opt.sel .radio{border-color:#E85D24;}
+.opt.sel .radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:#E85D24;}
+.opt-lbl{font-size:12.5px;font-weight:500;flex:1;line-height:1.35;}
+.opt-desc{font-size:11.5px;color:#888;margin-top:3px;line-height:1.45;}
+.opt-pts{font-size:11.5px;font-weight:700;color:#E85D24;white-space:nowrap;padding-top:2px;}
+.pil-hint{font-size:11.5px;color:#999;margin-bottom:11px;line-height:1.5;}
+.pil-rows{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.pil-row{display:flex;align-items:center;gap:8px;}
+.pil-name{font-size:12.5px;font-weight:500;width:95px;flex-shrink:0;}
+.pil-inp{width:70px!important;text-align:center;padding:7px 10px!important;}
+.pil-sym{font-size:12px;color:#999;}
+.pil-total{text-align:center;font-size:12.5px;margin-top:12px;color:#999;}
+.pil-total .pn{font-weight:700;}
+.ok{color:#16a34a;}.over{color:#dc2626;}
+.cta{width:100%;padding:14px;background:#E85D24;color:#fff;border:none;border-radius:11px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:8px;letter-spacing:.01em;}
+.cta:hover{background:#d0521f;}.cta:disabled{opacity:.4;cursor:not-allowed;}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Results single */
+.score-hero{text-align:center;padding:30px 24px;border-radius:16px;margin-bottom:22px;}
+.sc-num{font-size:60px;font-weight:700;line-height:1;}
+.sc-den{font-size:22px;font-weight:400;opacity:.55;}
+.sc-lv{font-size:15px;font-weight:600;margin-top:9px;}
+.sc-desc{font-size:12.5px;margin-top:5px;opacity:.72;}
+.sc-name{font-size:13px;font-weight:500;margin-top:12px;opacity:.75;}
+.bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px;}
+.bk{background:#f9f9f9;border-radius:11px;padding:13px 15px;}
+.bk-lbl{font-size:10px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.bk-n{font-size:22px;font-weight:700;}
+.bk-d{font-size:12px;color:#bbb;font-weight:400;}
+.bk-bar{height:4px;background:#efefef;border-radius:2px;margin-top:8px;}
+.bk-fill{height:4px;border-radius:2px;}
+.ai-box{border:1px solid #f0f0f0;border-radius:13px;padding:18px;margin-bottom:13px;}
+.ai-ttl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#bbb;margin-bottom:12px;}
+.ai-txt{font-size:13px;color:#444;line-height:1.75;}
+.imp-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid #f5f5f5;}
+.imp-item:last-child{border-bottom:none;}
+.imp-dot{width:30px;height:30px;background:#fffbeb;border:1px solid rgba(217,119,6,.25);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px;}
+.imp-crit{font-size:10.5px;font-weight:700;color:#d97706;margin-bottom:3px;}
+.imp-act{font-size:12.5px;color:#444;line-height:1.5;}
+.imp-pts{font-size:11.5px;font-weight:600;color:#16a34a;margin-top:4px;}
+.ben-item{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #f5f5f5;}
+.ben-item:last-child{border-bottom:none;}
+.ben-name{font-size:13px;font-weight:600;margin-bottom:3px;}
+.ben-loc{font-size:11.5px;color:#999;font-weight:400;}
+.ben-sim{font-size:12px;color:#666;line-height:1.5;}
+.ben-sei{font-size:11px;font-weight:700;color:#1C3A2F;background:rgba(28,58,47,.09);padding:3px 9px;border-radius:7px;white-space:nowrap;margin-left:auto;flex-shrink:0;}
+.tip{background:#f0fdf4;border:1px solid rgba(22,163,74,.2);border-radius:9px;padding:11px 14px;font-size:12.5px;color:#166534;line-height:1.6;margin-top:10px;}
+.uniq{background:rgba(232,93,36,.06);border:1px solid rgba(232,93,36,.2);border-radius:9px;padding:11px 14px;font-size:12.5px;color:#7c2d12;line-height:1.6;margin-top:10px;}
+.reset{width:100%;padding:11px;background:#f5f5f5;border:none;border-radius:9px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;color:#666;cursor:pointer;margin-top:12px;transition:background .15s;}
+.reset:hover{background:#ebebeb;}
+/* BATCH results */
+.batch-header{margin-bottom:20px;}
+.batch-title{font-size:18px;font-weight:700;margin-bottom:4px;}
+.batch-sub{font-size:13px;color:#888;}
+.batch-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px;}
+.bst{background:#f9f9f9;border-radius:11px;padding:12px;text-align:center;}
+.bst-n{font-size:22px;font-weight:700;line-height:1;}
+.bst-l{font-size:10px;color:#999;margin-top:4px;line-height:1.3;}
+/* Experience row */
+.exp-row{border:1px solid #f0f0f0;border-radius:13px;padding:16px 18px;margin-bottom:10px;transition:border .15s;}
+.exp-row:hover{border-color:#e0e0e0;}
+.exp-row-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.exp-level-badge{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.exp-name{font-size:13.5px;font-weight:600;color:#1a1a1a;line-height:1.3;flex:1;}
+.exp-cat{font-size:11px;color:#888;margin-top:2px;}
+.exp-score-big{font-size:22px;font-weight:700;line-height:1;}
+.exp-score-den{font-size:12px;font-weight:400;color:#bbb;}
+.exp-level-lbl{font-size:10px;font-weight:700;margin-top:1px;}
+.exp-bars{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px;}
+.exp-bar-item{text-align:center;}
+.exp-bar-lbl{font-size:9px;font-weight:700;color:#999;letter-spacing:.04em;margin-bottom:3px;}
+.exp-bar-n{font-size:11px;font-weight:700;}
+.exp-bar-track{height:3px;background:#f0f0f0;border-radius:2px;margin-top:3px;}
+.exp-bar-fill{height:3px;border-radius:2px;}
+.exp-reason{font-size:11.5px;color:#666;line-height:1.55;border-top:1px solid #f5f5f5;padding-top:8px;}
+.exp-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-right:4px;margin-bottom:3px;}
+/* Source input */
+.source-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.stab{flex:1;padding:10px;border:1px solid #e8e8e8;border-radius:9px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;color:#888;background:#fff;text-align:center;}
+.stab.on{border-color:#E85D24;color:#E85D24;background:rgba(232,93,36,.04);}
+.upload-area{border:2px dashed #e8e8e8;border-radius:13px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:16px;}
+.upload-area:hover{border-color:#E85D24;background:rgba(232,93,36,.02);}
+.upload-area.dragover{border-color:#E85D24;background:rgba(232,93,36,.04);}
+.upload-ico{font-size:32px;margin-bottom:10px;}
+.upload-txt{font-size:13px;font-weight:500;color:#888;line-height:1.6;}
+.upload-txt span{color:#E85D24;font-weight:600;}
+#file-input{display:none;}
+.file-preview{background:#f9f9f9;border-radius:9px;padding:12px 14px;margin-bottom:16px;display:none;align-items:center;gap:10px;}
+.file-preview.show{display:flex;}
+.file-ico{font-size:20px;}
+.file-name{font-size:12.5px;font-weight:500;color:#1a1a1a;flex:1;}
+.file-remove{background:none;border:none;color:#999;cursor:pointer;font-size:18px;padding:0 4px;}
+.progress-wrap{margin:16px 0;}
+.progress-lbl{font-size:12px;color:#888;margin-bottom:6px;}
+.progress-track{height:4px;background:#f0f0f0;border-radius:2px;}
+.progress-fill{height:4px;background:#E85D24;border-radius:2px;transition:width .3s;}
 </style>
 </head>
 <body>
-
-<!-- ══════════════════ SETUP OVERLAY ══════════════════ -->
-<div class="setup-overlay" id="setup-overlay">
-  <div class="setup-card">
-    <div class="setup-logo">
-      <div class="setup-logo-box">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      </div>
-      <div>
-        <div class="setup-name">EEI · Acttiv</div>
-        <div class="setup-sub-name">Análisis de Programa Hotelero</div>
-      </div>
-    </div>
-    <div class="setup-headline">Configura tu establecimiento</div>
-    <div class="setup-desc">En menos de un minuto obtendrás una primera valoración de tu programa de entretenimiento frente a la metodología EEI.</div>
-
-    <div class="field">
-      <label class="field-label">Nombre del establecimiento *</label>
-      <input class="fi" id="s-nombre" type="text" placeholder="ej: Hotel Costa Sol">
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label class="field-label">Categoría</label>
-        <select class="fs" id="s-cat">
-          <option value="3★">3 Estrellas</option>
-          <option value="4★">4 Estrellas</option>
-          <option value="4★S" selected>4★ Superior</option>
-          <option value="5★">5 Estrellas</option>
-          <option value="5★GL">5★ Gran Lujo</option>
-        </select>
-      </div>
-      <div class="field">
-        <label class="field-label">Destino / Municipio</label>
-        <input class="fi" id="s-dest" type="text" placeholder="ej: Playa del Inglés, GC">
-      </div>
-    </div>
-    <div class="field">
-      <label class="field-label">Tipología <span style="color:var(--text4)">(elige hasta 3)</span></label>
-      <div class="chips" id="chips-tipo">
-        <span class="chip" data-v="resort">Resort vacacional</span>
-        <span class="chip" data-v="familiar">Hotel familiar</span>
-        <span class="chip" data-v="wellness">Wellness-spa</span>
-        <span class="chip" data-v="boutique">Boutique-lifestyle</span>
-        <span class="chip" data-v="urbano">Urbano / negocio</span>
-        <span class="chip" data-v="rural">Rural-naturaleza</span>
-        <span class="chip" data-v="mice">MICE-congresos</span>
-      </div>
-    </div>
-    <div class="field">
-      <label class="field-label">Perfil del huésped predominante <span style="color:var(--text4)">(hasta 3)</span></label>
-      <div class="chips" id="chips-perf">
-        <span class="chip" data-v="familias">Familias con niños</span>
-        <span class="chip" data-v="parejas">Parejas</span>
-        <span class="chip" data-v="adultos">Adultos sin niños</span>
-        <span class="chip" data-v="senior">Senior 55+</span>
-        <span class="chip" data-v="grupos">Grupos / MICE</span>
-        <span class="chip" data-v="activo">Turista activo</span>
-      </div>
-    </div>
-    <div class="field">
-      <label class="field-label">Marco de sostenibilidad / ESG</label>
-      <div class="esg-row" id="esg-row">
-        <div class="esg-opt on" data-v="no">Sin marco definido</div>
-        <div class="esg-opt" data-v="proceso">En desarrollo</div>
-        <div class="esg-opt" data-v="si">Marco ESG activo</div>
-      </div>
-    </div>
-    <button class="setup-btn" onclick="saveSetup()">Empezar análisis →</button>
+<div class="wrap">
+  <div class="hdr">
+    <div class="logo">acttiv<span>.</span></div>
+    <div class="sei-tag">EVALUADOR SEI · EXTERIOR</div>
   </div>
-</div>
 
-<!-- ══════════════════ MAIN APP ══════════════════ -->
-<div class="layout" id="app" style="display:none">
+  <div id="v-form">
 
-  <aside class="sidebar">
-    <div class="logo-area">
-      <div class="logo-row">
-        <div class="logo-box">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    <div style="flex:1">
+      <div style="font-size:10.5px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Clave API Anthropic</div>
+      <input id="api-key-input" type="password" placeholder="sk-ant-..." style="border:1px solid rgba(217,119,6,.3);border-radius:7px;padding:7px 11px;font-size:12.5px;width:100%;background:#fff;font-family:'Poppins',sans-serif;outline:none;">
+    </div>
+    <button id="api-key-save" onclick="saveKey()" style="background:#d97706;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">Guardar</button>
+  </div>
+    <div class="toggle">
+      <button class="tgl on" data-m="min">Rápida</button>
+      <button class="tgl" data-m="max">Completa</button>
+      <button class="tgl" data-m="batch">Múltiple</button>
+    </div>
+
+    <!-- QUICK -->
+    <div id="quick-block">
+      <div class="hint"><strong>Modo rápido:</strong> describe la experiencia y la IA infiere los criterios SEI automáticamente.</div>
+      <div class="f2">
+        <div class="field" style="margin-bottom:0"><div class="lbl">Nombre</div><input id="q-name" placeholder="Tour gastronómico Agaete..."></div>
+        <div class="field" style="margin-bottom:0"><div class="lbl">Categoría</div>
+          <select id="q-cat"><option value="">Selecciona...</option><option>Gastronomía</option><option>Naturaleza</option><option>Cultura y patrimonio</option><option>Deporte y aventura</option><option>Artesanía</option><option>Bienestar</option></select>
         </div>
-        <div>
-          <div class="logo-n">EEI · Acttiv</div>
-          <div class="logo-s">Análisis de programa</div>
+      </div>
+      <div class="field"><div class="lbl">Descripción</div><textarea id="q-desc" rows="4" placeholder="Describe la experiencia: quién la organiza, qué hace el huésped, qué elementos locales tiene, dónde ocurre..."></textarea></div>
+      <button class="cta" id="q-btn" disabled>Analizar con IA</button>
+    </div>
+
+    <!-- MAX -->
+    <div id="max-block" style="display:none">
+      <div class="f2">
+        <div class="field" style="margin-bottom:0"><div class="lbl">Nombre</div><input id="m-name" placeholder="Tour gastronómico Agaete..."></div>
+        <div class="field" style="margin-bottom:0"><div class="lbl">Categoría</div>
+          <select id="m-cat"><option value="">Selecciona...</option><option>Gastronomía</option><option>Naturaleza</option><option>Cultura y patrimonio</option><option>Deporte y aventura</option><option>Artesanía</option><option>Bienestar</option></select>
         </div>
       </div>
+      <div class="field"><div class="lbl">Descripción breve</div><textarea id="m-desc" rows="2" placeholder="Describe la experiencia en 1-2 frases..."></textarea></div>
+      <div id="max-criteria"></div>
+      <div class="crit" id="icb-card">
+        <div class="crit-hd"><div class="crit-ico">🌱</div><div class="crit-name">Bienestar del huésped</div><div class="crit-sc" id="icb-badge">ICB · 0/10</div></div>
+        <div id="icb-body"></div>
+      </div>
+      <button class="cta" id="m-btn" disabled>Evaluar · análisis completo</button>
     </div>
-    <div class="hotel-panel">
-      <div class="hp-name" id="sb-name">—</div>
-      <div class="hp-meta" id="sb-meta">—</div>
-      <button class="hp-change" onclick="changeHotel()">Cambiar establecimiento</button>
-    </div>
-    <nav class="nav">
-      <div class="nav-lbl">Análisis</div>
-      <button class="nav-item on" onclick="goView('analysis',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Nuevo análisis
-      </button>
-      <button class="nav-item" onclick="goView('history',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Historial
-      </button>
-    </nav>
-    <div class="sid-footer">Sistema <span>EEI 1.0</span> · by acttiv</div>
-  </aside>
 
-  <main class="main">
-    <div class="topbar">
-      <div class="topbar-title">Análisis de Programa de Entretenimiento</div>
-      <span class="topbar-hotel" id="tb-name">—</span>
-    </div>
-    <div class="content">
+    <!-- BATCH -->
+    <div id="batch-block" style="display:none">
+      <div class="hint"><strong>Evaluación múltiple:</strong> pega una URL, sube un PDF o una imagen con un catálogo de experiencias. La IA las extrae y evalúa todas con el SEI de forma aproximada.</div>
+      <div class="source-tabs">
+        <button class="stab on" data-s="url">🔗 URL</button>
+        <button class="stab" data-s="pdf">📄 PDF / Imagen</button>
+        <button class="stab" data-s="text">📝 Texto</button>
+      </div>
 
-      <!-- VIEW ANALYSIS -->
-      <div id="view-analysis">
-        <div class="mode-tabs">
-          <button class="mode-tab on" onclick="switchMode('programa',this)">
-            <span class="tab-icon">📋</span>
-            <span class="tab-name">Programa completo</span>
-            <span class="tab-desc">Sube PDF o imagen · análisis global</span>
-          </button>
-          <button class="mode-tab" onclick="switchMode('actividad',this)">
-            <span class="tab-icon">✦</span>
-            <span class="tab-name">Actividad individual</span>
-            <span class="tab-desc">Analiza una sola actividad</span>
-          </button>
+      <!-- URL input -->
+      <div id="src-url">
+        <div class="field"><div class="lbl">URL del catálogo</div><input id="b-url" placeholder="https://www.civitatis.com/es/gran-canaria/" type="url"></div>
+      </div>
+      <!-- File input -->
+      <div id="src-pdf" style="display:none">
+        <div class="upload-area" id="drop-area">
+          <div class="upload-ico">📎</div>
+          <div class="upload-txt">Arrastra el PDF o imagen aquí<br>o <span>haz clic para seleccionar</span></div>
+          <input type="file" id="file-input" accept=".pdf,image/*">
         </div>
-
-        <!-- PANEL PROGRAMA -->
-        <div class="panel on" id="panel-programa">
-          <div class="upload-zone" id="upload-zone"
-               onclick="document.getElementById('file-input').click()"
-               ondragover="event.preventDefault();this.classList.add('drag')"
-               ondragleave="this.classList.remove('drag')"
-               ondrop="handleDrop(event)">
-            <span class="up-icon" id="up-icon">📁</span>
-            <div class="up-title" id="up-title">Sube el programa de actividades</div>
-            <div class="up-desc" id="up-desc">
-              Arrastra el PDF o imagen del programa semanal de tu hotel<br>
-              <small style="color:var(--text4)">PDF, JPG, PNG, WEBP · Máx. 4MB</small>
-            </div>
-            <span class="up-fname" id="up-fname" style="display:none"></span>
-            <span class="up-cta" id="up-cta">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              Seleccionar archivo
-            </span>
-          </div>
-          <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.webp" onchange="handleFile(this)">
-
-          <button class="run-btn" id="run-btn" disabled onclick="runAnalysis()">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Analizar programa completo con EEI
-          </button>
-
-          <div class="loading-box" id="loading">
-            <div class="ls" id="ls1"><span class="ls-dot"></span> Extrayendo actividades del programa...</div>
-            <div class="ls" id="ls2"><span class="ls-dot"></span> Clasificando por pilares EEI y calculando equilibrio experiencial...</div>
-            <div class="ls" id="ls3"><span class="ls-dot"></span> Calculando vinculación territorial y score Pulso EEI...</div>
-            <div class="ls" id="ls4"><span class="ls-dot"></span> Generando señales de diagnóstico y narrativa...</div>
-          </div>
-
-          <div class="results" id="results">
-            <div class="result-header" id="r-header"></div>
-            <div class="grid2">
-              <div class="rcard">
-                <div class="rc-lbl">Equilibrio experiencial · 5 pilares de bienestar</div>
-                <div class="radar-wrap" id="r-radar"></div>
-              </div>
-              <div class="rcard">
-                <div class="rc-lbl">Distribución temporal del programa</div>
-                <div id="r-dist"></div>
-                <div class="rc-lbl" style="margin-top:14px">Actividades detectadas</div>
-                <div class="count-pills" id="r-counts"></div>
-              </div>
-            </div>
-            <div class="pulso-card" id="r-pulso"></div>
-            <div class="signals-card" id="r-signals"></div>
-            <div class="narr-card" id="r-narr"></div>
-            <div class="cta-banner">
-              <div class="cta-ico">🔍</div>
-              <div class="cta-body">
-                <div class="cta-eyebrow">Siguiente paso recomendado</div>
-                <div class="cta-title">Escenario EEI — Diagnóstico completo in situ</div>
-                <div class="cta-desc">Los bloques 1 (Footprint operativo) y 4 (Madurez ESG) requieren una visita de campo. Representan hasta 50 puntos adicionales y el plan de acción concreto para tu establecimiento.</div>
-              </div>
-              <button class="cta-btn" onclick="showContact()">Solicitar Escenario EEI →</button>
-            </div>
-          </div>
-        </div><!-- /panel-programa -->
-
-        <!-- PANEL ACTIVIDAD -->
-        <div class="panel" id="panel-actividad">
-          <div class="act-box">
-            <label class="act-lbl">Describe la actividad en detalle</label>
-            <textarea class="act-ta" id="act-input" rows="3"
-              placeholder="ej: Cata de vinos locales con bodega del territorio, sommelier canario y maridaje con queso majorero..."></textarea>
-            <button class="act-run" id="act-btn" onclick="runActivity()">✦ Analizar actividad</button>
-          </div>
-          <div class="act-result" id="act-result">
-            <div class="ise-big" id="ise-num">—</div>
-            <div class="ise-lbl">ISE · Índice de Sostenibilidad de la Experiencia</div>
-            <div class="ise-rating" id="ise-rating">—</div>
-            <div class="ise-text" id="ise-text"></div>
-          </div>
+        <div class="file-preview" id="file-preview">
+          <div class="file-ico" id="file-ico">📄</div>
+          <div class="file-name" id="file-name"></div>
+          <button class="file-remove" id="file-remove">✕</button>
         </div>
-      </div><!-- /view-analysis -->
-
-      <!-- VIEW HISTORY -->
-      <div id="view-history" style="display:none">
-        <div style="font-size:14px;font-weight:600;margin-bottom:16px">Historial de análisis</div>
-        <div id="hist-list"></div>
+      </div>
+      <!-- Text input -->
+      <div id="src-text" style="display:none">
+        <div class="field"><div class="lbl">Pega el contenido del catálogo</div><textarea id="b-text" rows="8" placeholder="Pega aquí el listado de experiencias: nombres, descripciones, precios, duración..."></textarea></div>
       </div>
 
-    </div>
-  </main>
-</div>
-
-<!-- CONTACT MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <button class="modal-close" onclick="hideContact()">×</button>
-    <div id="modal-form-wrap">
-      <div class="modal-title">Solicitar Escenario EEI</div>
-      <div class="modal-sub">Completa el diagnóstico con una visita de campo. Nos ponemos en contacto contigo para concretar los detalles.</div>
-      <div class="field">
-        <label class="field-label">Nombre y apellidos *</label>
-        <input class="fi" id="m-nombre" type="text" placeholder="Tu nombre">
-      </div>
-      <div class="field">
-        <label class="field-label">Email *</label>
-        <input class="fi" id="m-email" type="email" placeholder="email@hotel.com">
-      </div>
-      <div class="field">
-        <label class="field-label">Teléfono</label>
-        <input class="fi" id="m-tel" type="tel" placeholder="+34 600 000 000">
-      </div>
-      <div class="field" id="m-hotel-field">
-        <label class="field-label">Hotel confirmado</label>
-        <input class="fi" id="m-hotel" type="text" readonly>
-      </div>
-      <button class="modal-btn" onclick="submitContact()">Solicitar Escenario EEI</button>
-    </div>
-    <div class="modal-success" id="modal-success">
-      <div style="font-size:40px;margin-bottom:12px">✅</div>
-      <div style="font-size:16px;font-weight:700;margin-bottom:8px">¡Solicitud enviada!</div>
-      <div style="font-size:12.5px;color:var(--text3);line-height:1.65">El equipo de Acttiv se pondrá en contacto contigo en las próximas 24h para organizar el Escenario EEI.</div>
-      <button class="modal-btn" onclick="hideContact()" style="margin-top:20px;background:var(--forest)">Cerrar</button>
+      <div class="field"><div class="lbl">Contexto del destino (opcional)</div><input id="b-context" placeholder="Ej: catálogo de Civitatis para hoteles de Gran Canaria, turismo sostenible..."></div>
+      <button class="cta" id="b-btn" disabled>Evaluar todas las experiencias</button>
     </div>
   </div>
-</div>
 
-<div class="toast" id="toast"></div>
+  <div id="v-result" style="display:none"></div>
+</div>
 
 <script>
-// ══════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════
-const K = { hotel: 'eei_hotel_v1', hist: 'eei_hist_v1' };
-let hotel = null;
-let hist = [];
-let curFile = null;
+const OR='#E85D24',GR='#1C3A2F',GRM='#2E6B4F';
+const PILLARS=['Social','Físico','Nutricional','Intelectual','Mental'];
 
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
-function init() {
-  const h = localStorage.getItem(K.hotel);
-  const hs = localStorage.getItem(K.hist);
-  if (h) hotel = JSON.parse(h);
-  if (hs) hist = JSON.parse(hs);
-  initChips('chips-tipo', 3);
-  initChips('chips-perf', 3);
-  initEsg();
-  if (hotel) showApp();
+const CRIT_MAX=[
+  {id:'pvl',name:'Vinculación local',badge:'PVL',ico:'🌿',opts:[
+    {v:10,l:'Actor local certificado con conexión directa',d:'Productor, artesano o guía nativo como protagonista verificable'},
+    {v:7,l:'Conexión indirecta con territorio',d:'El territorio aparece pero sin actor local protagonista'},
+    {v:3,l:'Tangencial',d:'Se menciona Canarias pero sin presencia real del tejido productivo'},
+    {v:0,l:'No conecta',d:'Sin ningún vínculo con la comunidad o entorno local'}]},
+  {id:'eco',name:'Impacto económico local',badge:'IEL',ico:'💶',opts:[
+    {v:10,l:'Operador 100% local, producto del territorio',d:'Todo el gasto genera empleo e ingreso en la economía canaria'},
+    {v:7,l:'Mayoría del gasto local (>60%)',d:'La mayor parte del dinero queda en el archipiélago'},
+    {v:4,l:'Mixto',d:'Parte local, parte cadena o proveedor externo'},
+    {v:1,l:'Mínima retención local',d:'Operador externo con presencia local mínima'},
+    {v:0,l:'Sin retención local',d:'Multinacional o producto importado sin impacto en la isla'}]},
+  {id:'aut',name:'Autenticidad de destino',badge:'AUT',ico:'🏔️',opts:[
+    {v:10,l:'Irrepetible fuera de Canarias',d:'Roque Nublo, café DO, Arehucas — imposible replicar'},
+    {v:8,l:'Muy representativa de Canarias',d:'Difícil de replicar con la misma autenticidad'},
+    {v:5,l:'Representativa pero replicable',d:'Podría ocurrir con adaptación en otro destino'},
+    {v:2,l:'Genérica',d:'Podría ocurrir en cualquier destino de sol y playa'},
+    {v:0,l:'Sin relación con el destino',d:'No hay ningún elemento identitario de Canarias'}]},
+  {id:'kno',name:'Transferencia de conocimiento',badge:'TCA',ico:'🎓',opts:[
+    {v:10,l:'Aprendizaje genuino y memorable',d:'Taller con artesano, productor explica su proceso, guía con conocimiento aborigen'},
+    {v:7,l:'Componente educativo claro pero superficial',d:'Información relevante sin interacción profunda'},
+    {v:4,l:'Información sin interacción real',d:'Paneles, audioguías o narración sin protagonista local'},
+    {v:1,l:'Mención puntual',d:'Se menciona el contexto local sin aprendizaje estructurado'},
+    {v:0,l:'Sin transferencia',d:'No aporta ningún conocimiento sobre el destino'}]}
+];
+
+const LEVELS=[
+  {min:40,max:50,label:'Referente',emoji:'⭐',color:'#16a34a',bg:'rgba(22,163,74,0.08)',border:'rgba(22,163,74,0.25)',desc:'Entra en catálogo Promotur'},
+  {min:30,max:39,label:'Comprometido',emoji:'🌍',color:GRM,bg:'rgba(46,107,79,0.08)',border:'rgba(46,107,79,0.25)',desc:'Entra con plan de mejora'},
+  {min:20,max:29,label:'En proceso',emoji:'⚡',color:'#d97706',bg:'#fffbeb',border:'rgba(217,119,6,0.25)',desc:'Plan de mejora obligatorio'},
+  {min:0,max:19,label:'Fuera',emoji:'✗',color:'#dc2626',bg:'rgba(220,38,38,0.07)',border:'rgba(220,38,38,0.22)',desc:'No acreditable'}
+];
+
+let mode='min', srcMode='url', scores={pvl:null,eco:null,aut:null,kno:null};
+let pillarsMax={Social:0,Físico:0,Nutricional:0,Intelectual:0,Mental:0};
+let batchFile=null, batchFileData=null;
+
+function getLevel(s){return LEVELS.find(l=>s>=l.min&&s<=l.max)||LEVELS[3];}
+function barColor(s){return s>=8?'#16a34a':s>=5?OR:'#dc2626';}
+function icbScore(){return Object.values(pillarsMax).filter(v=>Number(v)>=15).length*2;}
+function pillarTotal(){return Object.values(pillarsMax).reduce((a,b)=>a+Number(b||0),0);}
+function totalScoreMax(){
+  if(Object.values(scores).some(v=>v===null))return null;
+  return (scores.pvl||0)+(scores.eco||0)+(scores.aut||0)+icbScore()+(scores.kno||0);
 }
 
-// ══════════════════════════════════════════
-//  CHIPS
-// ══════════════════════════════════════════
-function initChips(id, max) {
-  document.querySelectorAll('#' + id + ' .chip').forEach(c => {
-    c.addEventListener('click', () => {
-      const active = document.querySelectorAll('#' + id + ' .chip.on');
-      if (c.classList.contains('on')) {
-        c.classList.remove('on');
-      } else if (active.length < max) {
-        c.classList.add('on');
-      } else {
-        toast('Máximo ' + max + ' opciones', 'error');
-      }
-    });
+// ── MODE TOGGLE ──
+document.querySelectorAll('.tgl').forEach(b=>{
+  b.addEventListener('click',()=>{
+    mode=b.dataset.m;
+    document.querySelectorAll('.tgl').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    document.getElementById('quick-block').style.display=mode==='min'?'':'none';
+    document.getElementById('max-block').style.display=mode==='max'?'':'none';
+    document.getElementById('batch-block').style.display=mode==='batch'?'':'none';
+    if(mode==='max'){buildMaxCriteria();buildICB();checkMaxCTA();}
+    if(mode==='batch')checkBatchCTA();
   });
+});
+
+// ── QUICK MODE ──
+function quickValid(){
+  return document.getElementById('q-name').value.trim()&&document.getElementById('q-cat').value&&document.getElementById('q-desc').value.trim().length>20;
+}
+['q-name','q-cat','q-desc'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>document.getElementById('q-btn').disabled=!quickValid());
+  document.getElementById(id).addEventListener('change',()=>document.getElementById('q-btn').disabled=!quickValid());
+});
+
+document.getElementById('q-btn').addEventListener('click',async()=>{
+  const btn=document.getElementById('q-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Analizando...';
+  const nm=document.getElementById('q-name').value.trim();
+  const cat=document.getElementById('q-cat').value;
+  const desc=document.getElementById('q-desc').value.trim();
+  const sys=`Eres el evaluador SEI de Acttiv para experiencias turísticas fuera del hotel en Canarias. Infiere la puntuación a partir de la descripción. Rúbrica SEI (5 criterios × 0-10, total /50): PVL Vinculación local, IEL Impacto económico, AUT Autenticidad de destino, ICB Bienestar (pilares Social/Físico/Nutricional/Intelectual/Mental activos ≥15% × 2pts), TCA Transferencia conocimiento. Devuelve SOLO JSON sin markdown: {"pvl":{"score":0,"reason":""},"iel":{"score":0,"reason":""},"aut":{"score":0,"reason":""},"icb":{"score":0,"pillars":[],"reason":""},"tca":{"score":0,"reason":""},"total":0,"level":"","narrative":"","quick_tip":""}`;
+  let ai={};
+  try{
+    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:1000,system:sys,messages:[{role:'user',content:`Experiencia: ${nm}\nCategoría: ${cat}\nDescripción: ${desc}`}]});
+    const d=await r.json();ai=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
+  }catch(e){ai={pvl:{score:0,reason:'Error de conexión'},iel:{score:0,reason:''},aut:{score:0,reason:''},icb:{score:0,pillars:[],reason:''},tca:{score:0,reason:''},total:0,level:'—',narrative:'Conecta a internet para el análisis.',quick_tip:''};}
+  renderQuickResult({nm,cat,ai});
+  btn.disabled=false;btn.innerHTML='Analizar con IA';
+});
+
+function renderQuickResult({nm,cat,ai}){
+  const lv=getLevel(ai.total||0);
+  const bks=[{l:'Vinculación local',b:'PVL',s:ai.pvl?.score||0,r:ai.pvl?.reason||''},{l:'Impacto económico',b:'IEL',s:ai.iel?.score||0,r:ai.iel?.reason||''},{l:'Autenticidad',b:'AUT',s:ai.aut?.score||0,r:ai.aut?.reason||''},{l:'Bienestar',b:'ICB',s:ai.icb?.score||0,r:ai.icb?.reason||''},{l:'Transf. conocimiento',b:'TCA',s:ai.tca?.score||0,r:ai.tca?.reason||''}];
+  document.getElementById('v-form').style.display='none';
+  const rv=document.getElementById('v-result');rv.style.display='';
+  rv.innerHTML=`<div class="score-hero" style="background:${lv.bg};border:1px solid ${lv.border}">
+    <div style="font-size:26px;margin-bottom:8px">${lv.emoji}</div>
+    <div class="sc-num" style="color:${lv.color}">${ai.total||0}<span class="sc-den">/50</span></div>
+    <div class="sc-lv" style="color:${lv.color}">${lv.label}</div>
+    <div class="sc-desc" style="color:${lv.color}">${lv.desc}</div>
+    <div class="sc-name">${nm} · ${cat}</div>
+  </div>
+  <div class="bk-grid">${bks.map(b=>`<div class="bk"><div class="bk-lbl">${b.l}</div><div class="bk-n" style="color:${barColor(b.s)}">${b.s}<span class="bk-d">/10</span></div>${b.r?`<div style="font-size:11.5px;color:#666;margin-top:4px;line-height:1.45">${b.r}</div>`:''}<div class="bk-bar"><div class="bk-fill" style="width:${b.s*10}%;background:${barColor(b.s)}"></div></div></div>`).join('')}</div>
+  ${ai.narrative?`<div class="ai-box"><div class="ai-ttl">Análisis</div><div class="ai-txt">${ai.narrative}</div>${ai.quick_tip?`<div class="tip">💡 ${ai.quick_tip}</div>`:''}</div>`:''}
+  <button class="reset" onclick="resetAll()">← Evaluar otra experiencia</button>`;
 }
 
-function chipVals(id) {
-  return [...document.querySelectorAll('#' + id + ' .chip.on')].map(c => c.dataset.v);
+// ── MAX MODE ──
+function buildMaxCriteria(){
+  const wrap=document.getElementById('max-criteria');
+  wrap.innerHTML=CRIT_MAX.map(c=>{const sel=scores[c.id];return`<div class="crit${sel!==null?' scored':''}" id="c-${c.id}"><div class="crit-hd"><div class="crit-ico">${c.ico}</div><div class="crit-name">${c.name}</div><div class="crit-sc">${c.badge} · ${sel!==null?sel:'-'}/10</div></div><div class="opts">${c.opts.map(o=>`<div class="opt${sel===o.v?' sel':''}" data-crit="${c.id}" data-val="${o.v}"><div class="radio"></div><div style="flex:1"><div class="opt-lbl">${o.l}</div>${o.d?`<div class="opt-desc">${o.d}</div>`:''}</div><div class="opt-pts">${o.v}/10</div></div>`).join('')}</div></div>`;}).join('');
+  wrap.querySelectorAll('.opt').forEach(el=>{el.addEventListener('click',()=>{scores[el.dataset.crit]=Number(el.dataset.val);buildMaxCriteria();buildICB();checkMaxCTA();});});
+}
+function buildICB(){
+  const sc=icbScore(),pt=pillarTotal();
+  document.getElementById('icb-badge').textContent=`ICB · ${sc}/10`;
+  document.getElementById('icb-card').className='crit'+(sc>0?' scored':'');
+  const active=Object.entries(pillarsMax).filter(([,v])=>Number(v)>=15).length;
+  document.getElementById('icb-body').innerHTML=`<div class="pil-hint">Distribuye el 100% entre los pilares activos. Pilares con ≥15% = 2 pts c/u</div><div class="pil-rows">${PILLARS.map(p=>`<div class="pil-row"><div class="pil-name">${p}</div><input class="pil-inp" type="number" min="0" max="100" value="${pillarsMax[p]||0}" data-p="${p}"><div class="pil-sym">%</div></div>`).join('')}</div><div class="pil-total">Total: <span class="pn ${pt===100?'ok':pt>100?'over':''}">${pt}%</span> de 100% · ${active} pilares → ${sc}/10</div>`;
+  document.getElementById('icb-body').querySelectorAll('input').forEach(el=>{el.addEventListener('input',()=>{pillarsMax[el.dataset.p]=Math.max(0,Math.min(100,Number(el.value)||0));buildICB();checkMaxCTA();});});
+}
+function checkMaxCTA(){
+  const ok=document.getElementById('m-name').value.trim()&&document.getElementById('m-cat').value&&Object.values(scores).every(v=>v!==null)&&pillarTotal()===100;
+  document.getElementById('m-btn').disabled=!ok;
+}
+['m-name','m-cat','m-desc'].forEach(id=>{document.getElementById(id).addEventListener('input',checkMaxCTA);document.getElementById(id).addEventListener('change',checkMaxCTA);});
+
+document.getElementById('m-btn').addEventListener('click',async()=>{
+  const btn=document.getElementById('m-btn');btn.disabled=true;btn.innerHTML='<span class="spin"></span>Analizando...';
+  const nm=document.getElementById('m-name').value.trim(),cat=document.getElementById('m-cat').value,desc=document.getElementById('m-desc').value.trim();
+  const sc=totalScoreMax(),lv=getLevel(sc),icb=icbScore();
+  const activePil=Object.entries(pillarsMax).filter(([,v])=>Number(v)>=15).map(([k])=>k);
+  const sys=`Eres el evaluador SEI de Acttiv para experiencias fuera del hotel en Canarias. Devuelve SOLO JSON sin markdown: {"narrative":"","improvement_plan":[{"criterion":"","action":"","impact":""}],"benchmark":[{"name":"","location":"","similarity":"","sei_reference":""}],"unique_advantage":""}. Máx 3 items por array. En español.`;
+  let ai={};
+  try{
+    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:1200,system:sys,messages:[{role:'user',content:`${nm} · ${cat}\n${desc?'Descripción: '+desc:''}\nISE: ${sc}/50 → ${lv.label}\nPVL:${scores.pvl} IEL:${scores.eco} AUT:${scores.aut} ICB:${icb}(${activePil.join(',')}) TCA:${scores.kno}`}]});
+    const d=await r.json();ai=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
+  }catch(e){ai={narrative:'Conecta a internet para el análisis completo.'};}
+  renderMaxResult({nm,cat,sc,lv,icb,ai});
+  btn.disabled=false;btn.innerHTML='Evaluar · análisis completo';
+});
+
+function renderMaxResult({nm,cat,sc,lv,icb,ai}){
+  const bks=[{l:'Vinculación local',b:'PVL',s:scores.pvl},{l:'Impacto económico',b:'IEL',s:scores.eco},{l:'Autenticidad',b:'AUT',s:scores.aut},{l:'Bienestar',b:'ICB',s:icb},{l:'Transf. conocimiento',b:'TCA',s:scores.kno}];
+  document.getElementById('v-form').style.display='none';
+  const rv=document.getElementById('v-result');rv.style.display='';
+  rv.innerHTML=`<div class="score-hero" style="background:${lv.bg};border:1px solid ${lv.border}">
+    <div style="font-size:26px;margin-bottom:8px">${lv.emoji}</div>
+    <div class="sc-num" style="color:${lv.color}">${sc}<span class="sc-den">/50</span></div>
+    <div class="sc-lv" style="color:${lv.color}">${lv.label}</div>
+    <div class="sc-desc" style="color:${lv.color}">${lv.desc}</div>
+    <div class="sc-name">${nm} · ${cat}</div>
+  </div>
+  <div class="bk-grid">${bks.map(b=>`<div class="bk"><div class="bk-lbl">${b.l}</div><div class="bk-n" style="color:${barColor(b.s)}">${b.s}<span class="bk-d">/10</span></div><div class="bk-bar"><div class="bk-fill" style="width:${b.s*10}%;background:${barColor(b.s)}"></div></div></div>`).join('')}</div>
+  ${ai.narrative?`<div class="ai-box"><div class="ai-ttl">Análisis</div><div class="ai-txt">${ai.narrative}</div>${ai.unique_advantage&&ai.unique_advantage!='null'?`<div class="uniq">⭐ ${ai.unique_advantage}</div>`:''}</div>`:''}
+  ${ai.improvement_plan?.length?`<div class="ai-box"><div class="ai-ttl">Plan de mejora</div>${ai.improvement_plan.map(i=>`<div class="imp-item"><div class="imp-dot">📈</div><div><div class="imp-crit">${i.criterion}</div><div class="imp-act">${i.action}</div>${i.impact?`<div class="imp-pts">${i.impact}</div>`:''}</div></div>`).join('')}</div>`:''}
+  ${ai.benchmark?.length?`<div class="ai-box"><div class="ai-ttl">Benchmark</div>${ai.benchmark.map(b=>`<div class="ben-item"><div style="flex:1"><div class="ben-name">${b.name} <span class="ben-loc">· ${b.location||''}</span></div><div class="ben-sim">${b.similarity}</div></div>${b.sei_reference?`<div class="ben-sei">SEI ~${b.sei_reference}</div>`:''}</div>`).join('')}</div>`:''}
+  <button class="reset" onclick="resetAll()">← Evaluar otra experiencia</button>`;
 }
 
-// ══════════════════════════════════════════
-//  ESG RADIO
-// ══════════════════════════════════════════
-function initEsg() {
-  document.querySelectorAll('#esg-row .esg-opt').forEach(o => {
-    o.addEventListener('click', () => {
-      document.querySelectorAll('#esg-row .esg-opt').forEach(x => x.classList.remove('on'));
-      o.classList.add('on');
-    });
+// ── BATCH MODE ──
+document.querySelectorAll('.stab').forEach(b=>{
+  b.addEventListener('click',()=>{
+    srcMode=b.dataset.s;
+    document.querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    document.getElementById('src-url').style.display=srcMode==='url'?'':'none';
+    document.getElementById('src-pdf').style.display=srcMode==='pdf'?'':'none';
+    document.getElementById('src-text').style.display=srcMode==='text'?'':'none';
+    checkBatchCTA();
   });
-}
-function esgVal() {
-  const a = document.querySelector('#esg-row .esg-opt.on');
-  return a ? a.dataset.v : 'no';
+});
+
+function checkBatchCTA(){
+  let ok=false;
+  if(srcMode==='url')ok=document.getElementById('b-url').value.trim().length>5;
+  else if(srcMode==='pdf')ok=batchFile!==null;
+  else if(srcMode==='text')ok=document.getElementById('b-text').value.trim().length>50;
+  document.getElementById('b-btn').disabled=!ok;
 }
 
-// ══════════════════════════════════════════
-//  SETUP
-// ══════════════════════════════════════════
-function saveSetup() {
-  const n = document.getElementById('s-nombre').value.trim();
-  if (!n) { toast('Introduce el nombre del establecimiento', 'error'); return; }
-  hotel = {
-    nombre: n,
-    categoria: document.getElementById('s-cat').value,
-    destino: document.getElementById('s-dest').value.trim() || 'Destino no especificado',
-    tipologias: chipVals('chips-tipo'),
-    perfil: chipVals('chips-perf'),
-    esg: esgVal()
-  };
-  localStorage.setItem(K.hotel, JSON.stringify(hotel));
-  showApp();
+document.getElementById('b-url').addEventListener('input',checkBatchCTA);
+document.getElementById('b-text').addEventListener('input',checkBatchCTA);
+
+// File upload
+const dropArea=document.getElementById('drop-area');
+const fileInput=document.getElementById('file-input');
+dropArea.addEventListener('click',()=>fileInput.click());
+dropArea.addEventListener('dragover',e=>{e.preventDefault();dropArea.classList.add('dragover');});
+dropArea.addEventListener('dragleave',()=>dropArea.classList.remove('dragover'));
+dropArea.addEventListener('drop',e=>{e.preventDefault();dropArea.classList.remove('dragover');handleFile(e.dataTransfer.files[0]);});
+fileInput.addEventListener('change',()=>handleFile(fileInput.files[0]));
+document.getElementById('file-remove').addEventListener('click',()=>{batchFile=null;batchFileData=null;document.getElementById('file-preview').classList.remove('show');dropArea.style.display='';checkBatchCTA();});
+
+function handleFile(file){
+  if(!file)return;
+  batchFile=file;
+  const isImg=file.type.startsWith('image/');
+  document.getElementById('file-ico').textContent=isImg?'🖼️':'📄';
+  document.getElementById('file-name').textContent=file.name;
+  document.getElementById('file-preview').classList.add('show');
+  dropArea.style.display='none';
+  const reader=new FileReader();
+  reader.onload=e=>{batchFileData=e.target.result.split(',')[1];checkBatchCTA();};
+  reader.readAsDataURL(file);
 }
 
-function showApp() {
-  document.getElementById('setup-overlay').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  updateSidebar();
-}
+// BATCH EVALUATE
+document.getElementById('b-btn').addEventListener('click',async()=>{
+  const btn=document.getElementById('b-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Extrayendo y evaluando...';
+  const context=document.getElementById('b-context').value.trim();
 
-function changeHotel() {
-  if (hotel) {
-    document.getElementById('s-nombre').value = hotel.nombre;
-    document.getElementById('s-dest').value = hotel.destino;
-    document.querySelectorAll('#chips-tipo .chip').forEach(c =>
-      c.classList.toggle('on', hotel.tipologias.includes(c.dataset.v)));
-    document.querySelectorAll('#chips-perf .chip').forEach(c =>
-      c.classList.toggle('on', hotel.perfil.includes(c.dataset.v)));
-    document.querySelectorAll('#esg-row .esg-opt').forEach(o =>
-      o.classList.toggle('on', o.dataset.v === hotel.esg));
+  let messages=[];
+  const sys=`Eres el evaluador SEI (Índice de Experiencia Sostenible) de Acttiv. Analiza el contenido proporcionado, extrae TODAS las experiencias turísticas que encuentres, y evalúa cada una con la rúbrica SEI Exterior (5 criterios × 0-10, total /50): PVL Vinculación local (10=actor local certificado, 7=indirecto, 3=tangencial, 0=no conecta), IEL Impacto económico local (10=100% local, 7=>60%, 4=mixto, 1=mínimo, 0=nada), AUT Autenticidad de destino (10=irrepetible, 8=muy representativa, 5=replicable, 2=genérica, 0=nada), ICB Bienestar (cuenta pilares Social/Físico/Nutricional/Intelectual/Mental activos × 2pts), TCA Transferencia conocimiento (10=aprendizaje genuino, 7=educativo, 4=info, 1=mención, 0=nada). Devuelve SOLO JSON sin markdown: {"source_name":"nombre de la fuente","total_found":0,"experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase explicando el nivel"}]}. Extrae el máximo de experiencias posible. En español.`;
+
+  if(srcMode==='url'){
+    const url=document.getElementById('b-url').value.trim();
+    messages=[{role:'user',content:`Analiza las experiencias turísticas disponibles en esta URL: ${url}\n${context?'Contexto: '+context:''}\nUsa tu conocimiento de este catálogo/destino para evaluar cada experiencia con el SEI.`}];
+  } else if(srcMode==='pdf'&&batchFileData){
+    const isImg=batchFile.type.startsWith('image/');
+    messages=[{role:'user',content:[
+      {type:isImg?'image':'document',source:{type:'base64',media_type:batchFile.type,data:batchFileData}},
+      {type:'text',text:`Extrae y evalúa todas las experiencias que encuentres en este ${isImg?'imagen':'documento'}.\n${context?'Contexto: '+context:''}`}
+    ]}];
+  } else {
+    const txt=document.getElementById('b-text').value.trim();
+    messages=[{role:'user',content:`Extrae y evalúa todas las experiencias del siguiente catálogo:\n\n${txt}\n${context?'Contexto: '+context:''}`}];
   }
-  document.getElementById('setup-overlay').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
-}
 
-function updateSidebar() {
-  if (!hotel) return;
-  document.getElementById('sb-name').textContent = hotel.nombre;
-  document.getElementById('sb-meta').textContent = hotel.categoria + ' · ' + hotel.destino;
-  document.getElementById('tb-name').textContent = hotel.nombre;
-}
+  let result={source_name:'Catálogo',total_found:0,experiences:[]};
+  try{
+    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:4000,system:sys,messages});
+    const d=await r.json();
+    result=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
+  }catch(e){result={source_name:'Error',total_found:0,experiences:[],error:'No se pudo conectar o analizar. Verifica la conexión.'};}
 
-// ══════════════════════════════════════════
-//  NAVIGATION
-// ══════════════════════════════════════════
-function goView(v, btn) {
-  document.getElementById('view-analysis').style.display = v === 'analysis' ? 'block' : 'none';
-  document.getElementById('view-history').style.display = v === 'history' ? 'block' : 'none';
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('on'));
-  btn.classList.add('on');
-  if (v === 'history') renderHist();
-}
+  renderBatchResult(result);
+  btn.disabled=false;btn.innerHTML='Evaluar todas las experiencias';
+});
 
-function switchMode(m, btn) {
-  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('panel-programa').classList.toggle('on', m === 'programa');
-  document.getElementById('panel-actividad').classList.toggle('on', m === 'actividad');
-}
+function renderBatchResult(data){
+  const exps=data.experiences||[];
+  const counts={ref:exps.filter(e=>e.level==='Referente').length,com:exps.filter(e=>e.level==='Comprometido').length,proc:exps.filter(e=>e.level==='En proceso').length,out:exps.filter(e=>e.level==='Fuera').length};
+  const sorted=[...exps].sort((a,b)=>b.total-a.total);
 
-// ══════════════════════════════════════════
-//  FILE HANDLING
-// ══════════════════════════════════════════
-function handleDrop(e) {
-  e.preventDefault();
-  document.getElementById('upload-zone').classList.remove('drag');
-  if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
-}
+  document.getElementById('v-form').style.display='none';
+  const rv=document.getElementById('v-result');rv.style.display='';
 
-function handleFile(input) {
-  if (input.files[0]) processFile(input.files[0]);
-}
-
-function processFile(file) {
-  const maxSize = 4 * 1024 * 1024;
-  if (file.size > maxSize) {
-    toast('El archivo supera 4MB. Comprime el PDF o usa una imagen.', 'error');
-    return;
-  }
-  const ok = ['application/pdf','image/jpeg','image/png','image/webp'];
-  if (!ok.includes(file.type)) {
-    toast('Formato no soportado. Usa PDF, JPG o PNG.', 'error');
-    return;
-  }
-  curFile = file;
-  const zone = document.getElementById('upload-zone');
-  zone.classList.add('has-file');
-  document.getElementById('up-icon').textContent = file.type === 'application/pdf' ? '📄' : '🖼️';
-  document.getElementById('up-title').textContent = 'Archivo listo para analizar';
-  document.getElementById('up-desc').style.display = 'none';
-  document.getElementById('up-cta').style.display = 'none';
-  document.getElementById('up-fname').textContent = '📎 ' + file.name;
-  document.getElementById('up-fname').style.display = 'inline-block';
-  document.getElementById('run-btn').disabled = false;
-}
-
-// ══════════════════════════════════════════
-//  API CALL
-// ══════════════════════════════════════════
-async function claude(system, messages, maxTokens = 2000, model = 'claude-sonnet-4-6') {
-  const res = await fetch('/api/claude', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model, max_tokens: maxTokens, system, messages })
-  });
-  if (!res.ok) throw new Error('API error ' + res.status);
-  const data = await res.json();
-  return data.content.map(b => b.text || '').join('');
-}
-
-function toB64(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(',')[1]);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
-}
-
-// ══════════════════════════════════════════
-//  LOADING STEPS
-// ══════════════════════════════════════════
-function stepSet(n, s) { // n=1-4, s='active'|'done'
-  const el = document.getElementById('ls' + n);
-  el.className = 'ls ' + (s === 'active' ? 'active' : s === 'done' ? 'done' : '');
-  const dot = el.querySelector('.ls-dot');
-  if (dot) {
-    if (s === 'done') { dot.outerHTML = '<span class="ls-check">✓</span>'; }
-  }
-}
-
-// ══════════════════════════════════════════
-//  MAIN ANALYSIS (MODE B)
-// ══════════════════════════════════════════
-async function runAnalysis() {
-  if (!curFile) return;
-  const btn = document.getElementById('run-btn');
-  btn.disabled = true;
-  document.getElementById('results').classList.remove('on');
-  document.getElementById('loading').classList.add('on');
-  stepSet(1,'active'); stepSet(2,''); stepSet(3,''); stepSet(4,'');
-
-  try {
-    const b64 = await toB64(curFile);
-    const mt = curFile.type;
-    const content = mt === 'application/pdf'
-      ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data:b64 } }
-      : { type:'image', source:{ type:'base64', media_type:mt, data:b64 } };
-
-    // ── STEP 1: EXTRACT ──
-    const sysExtract = `Eres un experto en análisis de programas de entretenimiento hotelero para el sistema EEI (Entertainment Experience Intelligence) de Acttiv.
-
-Lee el programa de actividades de hotel y extrae ÚNICAMENTE las actividades de cara al huésped.
-
-INCLUYE: actividades deportivas (yoga, aquagym, pilates, pádel, tenis, etc.), juegos (acuáticos, tradicionales, bingo, quiz, etc.), talleres y manualidades, shows y espectáculos nocturnos, actividades infantiles de miniclub (Starfish, Sea Explorers, Guardians of the Sea, Softplay, etc.), actividades de bienestar, eventos temáticos.
-
-EXCLUYE: ensayos del equipo de animación, revisiones de material e instalaciones, limpieza y organización, comidas del personal del equipo, formación interna del staff, Kids Control nocturno (supervisión de espacios sin actividad), Mascota matinal (rutina de animador), RRPP internas sin huéspedes, tareas solapadas administrativas, Apertura/cierre de programa (actos de gestión, no actividades).
-
-Para cada actividad:
-- pilar: fisico (deporte activo, natación, baile enérgico), mental (yoga, pilates, meditación, estiramiento, espalda sana), social (shows, quiz, minidisco, juegos cóctel, eventos, bingo), intelectual (manualidades, búsqueda del tesoro, juegos de ingenio, culturales), nutricional (catas, talleres gastronómicos — muy raro en programas estándar)
-- franja: manana (antes de 14h), tarde (14h-19h30), noche (19h30 en adelante)
-- infantil: true si es actividad de miniclub o para niños, false para adultos o familiar
-
-Responde SOLO con JSON válido (sin markdown):
-{
-  "hotel_detectado": "string o null",
-  "periodo": "string o null",
-  "actividades": [{"nombre":"string","pilar":"fisico|mental|social|intelectual|nutricional","franja":"manana|tarde|noche","infantil":boolean,"territorial":boolean,"motivo_territorial":"string o null"}],
-  "nota_programa": "1 frase de observación sobre el programa"
-}`;
-
-    const raw1 = await claude(sysExtract, [{
-      role:'user',
-      content:[
-        content,
-        { type:'text', text:`Establec: ${hotel.nombre} (${hotel.categoria}, ${hotel.destino}). Extrae solo actividades de cara al huésped, filtrando todo lo que sea gestión interna del equipo.` }
-      ]
-    }], 8000, 'claude-haiku-4-5');
-
-    let prog;
-    try { prog = JSON.parse(raw1.replace(/```json|```/g,'').trim()); }
-    catch(e) { throw new Error('Error parseando extracción: ' + raw1.slice(0,200)); }
-
-    const acts = prog.actividades || [];
-    stepSet(1,'done'); stepSet(2,'active');
-
-    // ── STEP 2: CALCULATE PILLARS ──
-    const p = { fisico:0, mental:0, social:0, intelectual:0, nutricional:0 };
-    const d = { manana:0, tarde:0, noche:0 };
-    let inf=0, adu=0, terr=0;
-    acts.forEach(a => {
-      if (p[a.pilar]!==undefined) p[a.pilar]++;
-      if (d[a.franja]!==undefined) d[a.franja]++;
-      if (a.infantil) inf++; else adu++;
-      if (a.territorial) terr++;
-    });
-    const tot = acts.length || 1;
-    const pp = {}; Object.keys(p).forEach(k => pp[k] = Math.round(p[k]/tot*100));
-    const dp = {}; const dt=d.manana+d.tarde+d.noche||1;
-    Object.keys(d).forEach(k => dp[k]=Math.round(d[k]/dt*100));
-    const terrPct = Math.round(terr/tot*100);
-
-    stepSet(2,'done'); stepSet(3,'active');
-
-    // ── STEP 3: SCORE ──
-    // Bloque 2 — Equilibrio (0-25)
-    let b2 = 0;
-    const maxP = Math.max(...Object.values(p));
-    const dom = maxP/tot;
-    if (dom < 0.35) b2+=10; else if (dom < 0.5) b2+=6; else if (dom < 0.65) b2+=3;
-    const mentalRatio = p.mental/tot;
-    if (mentalRatio > 0.15) b2+=5; else if (mentalRatio > 0.05) b2+=3; else if (mentalRatio > 0) b2+=1;
-    if (inf>0 && adu>0) b2+=5; else if (inf>0||adu>0) b2+=3;
-    const franjasActivas = [d.manana,d.tarde,d.noche].filter(v=>v>0).length;
-    if (franjasActivas===3) b2+=5; else if (franjasActivas===2) b2+=3; else if (franjasActivas===1) b2+=1;
-    b2 = Math.min(25, b2);
-
-    // Bloque 3 — Territorial (0-25)
-    let b3 = 0;
-    if (terrPct>40) b3+=7; else if (terrPct>25) b3+=5; else if (terrPct>10) b3+=3; else if (terrPct>0) b3+=1;
-    const terrActs = acts.filter(a=>a.territorial);
-    b3 += Math.min(6, terrActs.length*2);
-    b3 = Math.min(25, b3);
-
-    const score = b2+b3;
-
-    stepSet(3,'done'); stepSet(4,'active');
-
-    // ── STEP 4: SIGNALS & NARRATIVE ──
-    const sysSignal = `Eres un analista del sistema EEI de Acttiv. Produces diagnósticos precisos, directos y orientados a la venta del Escenario EEI.
-
-Tus señales son:
-- Específicas: datos concretos del programa analizado, no afirmaciones genéricas
-- Honestas: si el programa es bueno en algo, lo dices; si tiene un gap claro, lo nombras sin rodeos
-- Cortas: máx 45 palabras por señal
-- Orientadas a generar tensión productiva hacia el Escenario EEI
-
-Devuelve SOLO JSON válido (sin markdown):
-{
-  "senales": [
-    {"tipo":"gap|oportunidad","titulo":"string corto","texto":"string 35-45 palabras"},
-    {"tipo":"gap|oportunidad","titulo":"...","texto":"..."},
-    {"tipo":"gap|oportunidad","titulo":"...","texto":"..."}
-  ],
-  "narrativa": "2 párrafos separados por \\n\\n. P1: lectura del programa y qué revela. P2: por qué el Escenario EEI es el paso lógico ahora."
-}`;
-
-    const pStr = Object.entries(pp).map(([k,v])=>`${k}:${v}%`).join(', ');
-    const aStr = acts.slice(0,15).map(a=>a.nombre).join(', ');
-
-    const raw2 = await claude(sysSignal, [{
-      role:'user',
-      content: `Datos del análisis — ${hotel.nombre} (${hotel.categoria}, ${hotel.destino}):
-- Actividades de cara al huésped: ${tot}
-- Pilares: ${pStr}
-- Contenido territorial: ${terrPct}% de actividades
-- Distribución: mañana ${dp.manana}% · tarde ${dp.tarde}% · noche ${dp.noche}%
-- Infantil: ${inf} actividades · Adultos: ${adu}
-- Tipología: ${hotel.tipologias.join(', ')||'no especificada'} · Perfil: ${hotel.perfil.join(', ')||'no especificado'}
-- ESG: ${hotel.esg}
-- Muestra de actividades: ${aStr}
-- Nota del programa: ${prog.nota_programa||''}
-- Score Pulso EEI visible: B2 (equilibrio) ${b2}/25 · B3 (territorial) ${b3}/25 = ${score}/50 total visible
-- 50 puntos pendientes requieren visita (B1 footprint + B4 ESG)
-
-Genera 3 señales (2 gaps + 1 oportunidad) y el diagnóstico narrativo. Sé específico con este hotel y este programa.`
-    }], 2000);
-
-    let sig;
-    try { sig = JSON.parse(raw2.replace(/```json|```/g,'').trim()); }
-    catch(e) { sig = { senales:[{ tipo:'gap', titulo:'Ver diagnóstico', texto:'Consulta el análisis narrativo para las señales detectadas.' }], narrativa: raw2 }; }
-
-    stepSet(4,'done');
-
-    // ── RENDER ──
-    render({ hotel:hotel.nombre, tot, pp, dp, terrPct, inf, adu, b2, b3, score, senales:sig.senales||[], narrativa:sig.narrativa||'', nota:prog.nota_programa||'' });
-
-    // Save history
-    hist.unshift({ hotel:hotel.nombre, cat:hotel.categoria, fecha:new Date().toLocaleDateString('es-ES'), tot, score, b2, b3 });
-    if (hist.length>10) hist=hist.slice(0,10);
-    localStorage.setItem(K.hist, JSON.stringify(hist));
-
-    document.getElementById('loading').classList.remove('on');
-    document.getElementById('results').classList.add('on');
-    document.getElementById('results').scrollIntoView({ behavior:'smooth', block:'start' });
-    toast('Análisis completado ✓', 'success');
-
-  } catch(err) {
-    console.error(err);
-    document.getElementById('loading').classList.remove('on');
-    toast('Error: ' + err.message, 'error');
-  }
-  btn.disabled = false;
-}
-
-// ══════════════════════════════════════════
-//  RENDER RESULTS
-// ══════════════════════════════════════════
-function render({ hotel:h, tot, pp, dp, terrPct, inf, adu, b2, b3, score, senales, narrativa, nota }) {
-
-  // Header
-  document.getElementById('r-header').innerHTML = `
-    <div class="rh-icon">📊</div>
-    <div>
-      <div class="rh-hotel">${h}</div>
-      <div class="rh-meta">${tot} actividades identificadas · ${new Date().toLocaleDateString('es-ES')}</div>
-      ${nota ? `<div class="rh-note">${nota}</div>` : ''}
-    </div>
-    <div class="rh-badge">Pulso EEI ${score}/50</div>`;
-
-  // Radar
-  document.getElementById('r-radar').innerHTML = makeRadar(pp);
-
-  // Distribution
-  const COL = { manana:'#E85D24', tarde:'#00BAC4', noche:'#1C3A2F' };
-  const LAB = { manana:'Mañana', tarde:'Tarde', noche:'Noche' };
-  document.getElementById('r-dist').innerHTML = `
-    <div class="dist-bar">
-      ${Object.entries(dp).map(([k,v]) => v>0
-        ? `<div class="dist-seg" style="width:${v}%;background:${COL[k]}">${v>12?v+'%':''}</div>` : '').join('')}
-    </div>
-    <div class="dist-legend">
-      ${Object.entries(dp).map(([k,v])=>`
-        <div class="dist-item"><div class="dist-dot" style="background:${COL[k]}"></div>${LAB[k]} ${v}%</div>`).join('')}
-    </div>`;
-
-  // Counts
-  document.getElementById('r-counts').innerHTML = `
-    <span class="cpill">👶 Infantil: ${inf}</span>
-    <span class="cpill">👤 Adultos: ${adu}</span>
-    <span class="cpill">🌿 Territorial: ${terrPct}%</span>`;
-
-  // Pulso score
-  const b2p=(b2/25*100).toFixed(0), b3p=(b3/25*100).toFixed(0);
-  document.getElementById('r-pulso').innerHTML = `
-    <div class="pulso-head">
-      <div class="pulso-title">Puntuación Pulso EEI · visible desde el programa</div>
-      <div class="pulso-num">${score}<small> / 50 analizados</small></div>
-    </div>
-    ${brow('B2','Equilibrio experiencial','Distribución de pilares, segmentación, cobertura horaria',b2,b2p,'analyzed')}
-    ${brow('B3','Vinculación territorial','% contenido territorial, dimensiones activadas',b3,b3p,'analyzed')}
-    ${brow('B1','Footprint operativo','Plásticos, energía, materiales, formación — requiere visita',null,0,'pending')}
-    ${brow('B4','Madurez ESG','Certificaciones, medición, reporting — requiere visita',null,0,'pending')}
-    <div class="pulso-note">Los bloques 1 y 4 suman hasta <strong>50 puntos adicionales</strong> y solo se pueden evaluar in situ. El diagnóstico completo requiere el <strong>Escenario EEI</strong>.</div>`;
-
-  // Signals
-  document.getElementById('r-signals').innerHTML = `
-    <div class="rc-lbl" style="margin-bottom:12px">Señales EEI · 3 lecturas clave del programa</div>
-    ${senales.map(s=>`
-      <div class="signal ${s.tipo==='oportunidad'?'opp':''}">
-        <div class="signal-lbl">${s.tipo==='oportunidad'?'▲ Oportunidad':'◎ Gap detectado'} · ${s.titulo}</div>
-        <div class="signal-text">${s.texto}</div>
-      </div>`).join('')}`;
-
-  // Narrative
-  if (narrativa) {
-    const parts = narrativa.split('\n\n').filter(x=>x.trim());
-    const nc = document.getElementById('r-narr');
-    nc.classList.add('on');
-    nc.innerHTML = `
-      <div class="narr-head">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E85D24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        Diagnóstico narrativo
+  rv.innerHTML=`
+  <div class="batch-header">
+    <div class="batch-title">${data.source_name||'Catálogo evaluado'}</div>
+    <div class="batch-sub">${exps.length} experiencias analizadas · Evaluación SEI Exterior aproximada</div>
+  </div>
+  <div class="batch-stats">
+    <div class="bst"><div class="bst-n" style="color:#16a34a">${counts.ref}</div><div class="bst-l">⭐ Referente</div></div>
+    <div class="bst"><div class="bst-n" style="color:${GRM}">${counts.com}</div><div class="bst-l">🌍 Comprometido</div></div>
+    <div class="bst"><div class="bst-n" style="color:#d97706">${counts.proc}</div><div class="bst-l">⚡ En proceso</div></div>
+    <div class="bst"><div class="bst-n" style="color:#dc2626">${counts.out}</div><div class="bst-l">✗ Fuera</div></div>
+  </div>
+  ${sorted.map(e=>{
+    const lv=getLevel(e.total||0);
+    const bars=[{l:'PVL',s:e.pvl||0},{l:'IEL',s:e.iel||0},{l:'AUT',s:e.aut||0},{l:'ICB',s:e.icb||0},{l:'TCA',s:e.tca||0}];
+    return`<div class="exp-row">
+      <div class="exp-row-hd">
+        <div class="exp-level-badge" style="background:${lv.bg};border:1px solid ${lv.border}">${lv.emoji}</div>
+        <div style="flex:1">
+          <div class="exp-name">${e.name}</div>
+          <div class="exp-cat">${e.category||''}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="exp-score-big" style="color:${lv.color}">${e.total||0}<span class="exp-score-den">/50</span></div>
+          <div class="exp-level-lbl" style="color:${lv.color}">${lv.label}</div>
+        </div>
       </div>
-      <div class="narr-body">${parts.map(p=>`<p>${p}</p>`).join('')}</div>`;
-  }
-}
-
-function brow(lbl, name, desc, score, pct, type) {
-  const pts = type==='analyzed' ? score+'/25' : '—/25';
-  const tag = type==='analyzed' ? '<span class="btag ok">✓ Analizado</span>' : '<span class="btag pend">Visita necesaria</span>';
-  return `<div class="brow">
-    <div class="blbl ${type}">${lbl}</div>
-    <div class="binfo">
-      <div class="bname">${name}</div>
-      <div class="bbar"><div class="bfill ${type}" style="width:${pct}%"></div></div>
-      <div class="bdesc">${desc}</div>
-    </div>
-    <div class="bpts ${type}">${pts}</div>
-    ${tag}
-  </div>`;
-}
-
-// ══════════════════════════════════════════
-//  RADAR SVG
-// ══════════════════════════════════════════
-function makeRadar(data) {
-  const { fisico=0, mental=0, social=0, intelectual=0, nutricional=0 } = data;
-  const vals = [fisico, mental, social, intelectual, nutricional];
-  const lbls = ['Físico', 'Mental', 'Social', 'Intelectual', 'Nutricional'];
-  const cx=120, cy=120, R=85, n=5;
-  const step=2*Math.PI/n, a0=-Math.PI/2;
-  const pt=(r,i)=>{ const a=a0+i*step; return [(cx+r*Math.cos(a)).toFixed(1),(cy+r*Math.sin(a)).toFixed(1)]; };
-
-  const grid = [0.33,0.67,1].map(f=>{
-    const pts = Array.from({length:n},(_,i)=>pt(R*f,i).join(',')).join(' ');
-    return `<polygon points="${pts}" fill="none" stroke="#E8E5E0" stroke-width="1"/>`;
-  }).join('');
-  const axes = Array.from({length:n},(_,i)=>{
-    const [x,y]=pt(R,i);
-    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#E8E5E0" stroke-width="1"/>`;
-  }).join('');
-  const datapts = vals.map((v,i)=>pt(R*v/100,i).join(',')).join(' ');
-  const dots = vals.map((v,i)=>{
-    if(!v) return '';
-    const [x,y]=pt(R*v/100,i);
-    return `<circle cx="${x}" cy="${y}" r="3.5" fill="#E85D24"/>`;
-  }).join('');
-  const labels = lbls.map((l,i)=>{
-    const [x,y]=pt(R+22,i);
-    return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-family="Poppins,sans-serif" font-size="9.5" font-weight="600" fill="#8A847C">${l}</text>`;
-  }).join('');
-
-  return `<svg viewBox="0 0 240 240" style="width:100%;max-width:210px">
-    ${grid}${axes}
-    <polygon points="${datapts}" fill="rgba(232,93,36,.18)" stroke="#E85D24" stroke-width="2" stroke-linejoin="round"/>
-    ${dots}${labels}
-  </svg>`;
-}
-
-// ══════════════════════════════════════════
-//  MODE A — ACTIVIDAD INDIVIDUAL
-// ══════════════════════════════════════════
-async function runActivity() {
-  const input = document.getElementById('act-input').value.trim();
-  if (!input) { toast('Describe la actividad primero','error'); return; }
-  const btn = document.getElementById('act-btn');
-  btn.disabled = true; btn.textContent = '⟳ Analizando...';
-
-  try {
-    const raw = await claude(
-      `Eres un experto del sistema EEI de Acttiv. Analiza brevemente una actividad hotelera. Devuelve SOLO JSON válido:
-{"ise":number(0-10,1decimal),"rating":"string corto (Experiencia excelente|sólida|estándar|débil)","pilares":{"fisico":0-100,"mental":0-100,"social":0-100,"intelectual":0-100,"nutricional":0-100},"pvl":"bajo|medio|alto","diagnosis":"2 frases directas y concretas: fortaleza principal + gap principal o recomendación de mejora. Menciona el Escenario EEI como paso para profundizar."}
-Los pilares deben sumar exactamente 100.`,
-      [{ role:'user', content:`Hotel: ${hotel.nombre} (${hotel.categoria}, ${hotel.destino})\nActividad: "${input}"` }],
-      400
-    );
-    const r = JSON.parse(raw.replace(/```json|```/g,'').trim());
-    document.getElementById('ise-num').textContent = r.ise;
-    document.getElementById('ise-rating').textContent = r.rating;
-    document.getElementById('ise-text').textContent = r.diagnosis;
-    document.getElementById('act-result').classList.add('on');
-    toast('Análisis completado','success');
-  } catch(e) {
-    console.error(e);
-    toast('Error al analizar la actividad','error');
-  }
-  btn.disabled = false; btn.textContent = '✦ Analizar actividad';
-}
-
-// ══════════════════════════════════════════
-//  HISTORY
-// ══════════════════════════════════════════
-function renderHist() {
-  const c = document.getElementById('hist-list');
-  if (!hist.length) {
-    c.innerHTML = `<div class="hist-empty">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <p>No hay análisis guardados todavía.<br>Sube un programa para empezar.</p>
-    </div>`;
-    return;
-  }
-  c.innerHTML = hist.map(h => `
-    <div class="hist-item">
-      <div class="hist-ico">📊</div>
-      <div class="hist-info">
-        <div class="hist-hotel">${h.hotel}</div>
-        <div class="hist-meta">${h.fecha} · ${h.cat} · ${h.tot} actividades</div>
+      <div class="exp-bars">
+        ${bars.map(b=>`<div class="exp-bar-item">
+          <div class="exp-bar-lbl">${b.l}</div>
+          <div class="exp-bar-n" style="color:${barColor(b.s)}">${b.s}</div>
+          <div class="exp-bar-track"><div class="exp-bar-fill" style="width:${b.s*10}%;background:${barColor(b.s)}"></div></div>
+        </div>`).join('')}
       </div>
-      <div class="hist-score">${h.score}<small>/50</small></div>
-    </div>`).join('');
+      ${e.reason?`<div class="exp-reason">${e.reason}</div>`:''}
+    </div>`;
+  }).join('')}
+  ${data.error?`<div style="background:#fff5f5;border:1px solid rgba(220,38,38,.2);border-radius:9px;padding:12px 14px;font-size:12.5px;color:#dc2626;margin-bottom:12px;">${data.error}</div>`:''}
+  <button class="reset" onclick="resetAll()">← Nueva evaluación</button>`;
 }
 
-// ══════════════════════════════════════════
-//  CONTACT MODAL
-// ══════════════════════════════════════════
-function showContact() {
-  if (hotel) document.getElementById('m-hotel').value = hotel.nombre;
-  document.getElementById('modal-form-wrap').style.display = 'block';
-  document.getElementById('modal-success').classList.remove('on');
-  document.getElementById('modal').classList.add('on');
-}
-function hideContact() { document.getElementById('modal').classList.remove('on'); }
-function submitContact() {
-  const n = document.getElementById('m-nombre').value.trim();
-  const e = document.getElementById('m-email').value.trim();
-  if (!n || !e) { toast('Introduce nombre y email','error'); return; }
-  document.getElementById('modal-form-wrap').style.display = 'none';
-  document.getElementById('modal-success').classList.add('on');
+// ── RESET ──
+function resetAll(){
+  scores={pvl:null,eco:null,aut:null,kno:null};
+  pillarsMax={Social:0,Físico:0,Nutricional:0,Intelectual:0,Mental:0};
+  batchFile=null;batchFileData=null;
+  ['q-name','q-cat','q-desc','m-name','m-cat','m-desc','b-url','b-text','b-context'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('q-btn').disabled=true;
+  document.getElementById('b-btn').disabled=true;
+  document.getElementById('file-preview').classList.remove('show');
+  document.getElementById('drop-area').style.display='';
+  document.getElementById('v-result').style.display='none';
+  document.getElementById('v-form').style.display='';
+  if(mode==='max'){buildMaxCriteria();buildICB();checkMaxCTA();}
 }
 
-// ══════════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════════
-function toast(msg, type='') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast on ' + type;
-  setTimeout(() => { t.className = 'toast'; }, 3200);
+function apiCall(body){
+  return fetch('/.netlify/functions/sei',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
 }
-
-// START
-init();
 </script>
 </body>
 </html>
