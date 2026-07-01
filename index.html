@@ -373,7 +373,7 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
   const btn=document.getElementById('b-btn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span>Evaluando...';
   const ctx=document.getElementById('b-ctx').value.trim();
-  const sys='Eres el evaluador SEI de Acttiv. Evalúa experiencias turísticas con la rúbrica SEI Exterior (5 criterios 0-10, total /50): PVL=vinculación local, IEL=impacto económico local, AUT=autenticidad de destino, ICB=bienestar (pilares×2pts), TCA=transferencia conocimiento. Devuelve SOLO JSON válido sin markdown: {"source_name":"fuente","experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase breve"}]}. Máximo 10 experiencias. En español.';
+  const sys='Eres el evaluador SEI de Acttiv. Evalúa experiencias turísticas con la rúbrica SEI Exterior (5 criterios 0-10, total /50): PVL=vinculación local, IEL=impacto económico local, AUT=autenticidad de destino, ICB=bienestar (pilares×2pts), TCA=transferencia conocimiento. IMPORTANTE: selecciona experiencias que cubran los tres niveles SEI — incluye algunas de alto score (Referente 40-50), varias de nivel medio (Comprometido 30-39) y algunas de bajo score (En proceso o Fuera, <30). Esto es esencial para mostrar el rango completo del catálogo. Devuelve SOLO JSON válido sin markdown: {"source_name":"fuente","experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase breve"}]}. Máximo 10 experiencias. En español.';
   let messages=[];
   if(srcMode==='url'){
     const url=document.getElementById('b-url').value.trim();
