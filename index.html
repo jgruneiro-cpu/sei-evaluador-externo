@@ -220,7 +220,7 @@ textarea{resize:vertical;}
     </div>
   </div>
 
-  <div id="v-result" style="display:none;padding:0 8px;"></div>
+  <div id="v-result" style="display:none"></div>
 </div>
 
 <script>
@@ -315,7 +315,7 @@ function renderQuickResult({nm,cat,ai}){
   const lv=getLevel(ai.total||0);
   const bks=[{l:'Vinculación local',b:'PVL',s:ai.pvl?.score||0,r:ai.pvl?.reason||''},{l:'Impacto económico',b:'IEL',s:ai.iel?.score||0,r:ai.iel?.reason||''},{l:'Autenticidad',b:'AUT',s:ai.aut?.score||0,r:ai.aut?.reason||''},{l:'Bienestar',b:'ICB',s:ai.icb?.score||0,r:ai.icb?.reason||''},{l:'Transf. conocimiento',b:'TCA',s:ai.tca?.score||0,r:ai.tca?.reason||''}];
   document.getElementById('v-form').style.display='none';
-  const rv=document.getElementById('v-result');rv.style.display='';
+  const rv=document.getElementById('v-result');rv.style.display='block';
   rv.innerHTML=`<div class="score-hero" style="background:${lv.bg};border:1px solid ${lv.border}">
     <div style="font-size:26px;margin-bottom:8px">${lv.emoji}</div>
     <div class="sc-num" style="color:${lv.color}">${ai.total||0}<span class="sc-den">/50</span></div>
@@ -366,7 +366,7 @@ document.getElementById('m-btn').addEventListener('click',async()=>{
 function renderMaxResult({nm,cat,sc,lv,icb,ai}){
   const bks=[{l:'Vinculación local',b:'PVL',s:scores.pvl},{l:'Impacto económico',b:'IEL',s:scores.eco},{l:'Autenticidad',b:'AUT',s:scores.aut},{l:'Bienestar',b:'ICB',s:icb},{l:'Transf. conocimiento',b:'TCA',s:scores.kno}];
   document.getElementById('v-form').style.display='none';
-  const rv=document.getElementById('v-result');rv.style.display='';
+  const rv=document.getElementById('v-result');rv.style.display='block';
   rv.innerHTML=`<div class="score-hero" style="background:${lv.bg};border:1px solid ${lv.border}">
     <div style="font-size:26px;margin-bottom:8px">${lv.emoji}</div>
     <div class="sc-num" style="color:${lv.color}">${sc}<span class="sc-den">/50</span></div>
@@ -470,7 +470,7 @@ function renderBatchResult(data){
   const proc=sorted.filter(e=>e.level==='En proceso'||e.level==='Fuera');
 
   document.getElementById('v-form').style.display='none';
-  const rv=document.getElementById('v-result');rv.style.display='';
+  const rv=document.getElementById('v-result');rv.style.display='block';
 
   function card(e,i){
     const lv=getLevel(e.total||0);
@@ -532,7 +532,7 @@ function resetAll(){
   document.getElementById('file-preview').classList.remove('show');
   document.getElementById('drop-area').style.display='';
   document.getElementById('v-result').style.display='none';
-  document.getElementById('v-form').style.display='';
+  document.getElementById('v-form').style.display='block';
   if(mode==='max'){buildMaxCriteria();buildICB();checkMaxCTA();}
 }
 
