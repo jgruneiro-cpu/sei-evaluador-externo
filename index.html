@@ -451,7 +451,6 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
   }
 
   let result={source_name:'Catálogo',total_found:0,experiences:[]};
-  let result={source_name:'Catálogo',total_found:0,experiences:[]};
   try{
     const r=await apiCall({model:'claude-haiku-4-5-20251001',max_tokens:1500,system:sys,messages});
     const d=await r.json();
