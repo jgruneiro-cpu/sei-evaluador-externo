@@ -434,7 +434,7 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
   const context=document.getElementById('b-context').value.trim();
  
   let messages=[];
-  const sys=`Eres el evaluador SEI de Acttiv. Extrae y evalúa experiencias turísticas con la rúbrica SEI Exterior (5 criterios 0-10, total /50): PVL=vinculación local, IEL=impacto económico local, AUT=autenticidad de destino, ICB=bienestar (pilares×2), TCA=transferencia conocimiento. Devuelve SOLO JSON sin markdown: {"source_name":"fuente","total_found":0,"experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase"}]}. Máximo 5 experiencias. En español.`;
+  const sys=`Eres el evaluador SEI de Acttiv. Extrae y evalúa experiencias turísticas con la rúbrica SEI Exterior (5 criterios 0-10, total /50): PVL=vinculación local, IEL=impacto económico local, AUT=autenticidad de destino, ICB=bienestar (pilares×2), TCA=transferencia conocimiento. Devuelve SOLO JSON sin markdown: {"source_name":"fuente","total_found":0,"experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase"}]}. Máximo 20 experiencias. En español.`;
  
   if(srcMode==='url'){
     const url=document.getElementById('b-url').value.trim();
@@ -452,7 +452,7 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
  
   let result={source_name:'Catálogo',total_found:0,experiences:[]};
   try{
-    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:1500,system:sys,messages});
+    const r=await apiCall({model:'claude-haiku-4-5-20251001',max_tokens:4000,system:sys,messages});
     const d=await r.json();
     result=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
   }catch(e){result={source_name:'Error',total_found:0,experiences:[],error:'No se pudo conectar o analizar. Verifica la conexión.'};}
