@@ -438,7 +438,7 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
 
   if(srcMode==='url'){
     const url=document.getElementById('b-url').value.trim();
-    messages=[{role:'user',content:`Analiza las experiencias turísticas disponibles en esta URL: ${url}\n${context?'Contexto: '+context:''}\nUsa tu conocimiento de este catálogo/destino para evaluar cada experiencia con el SEI.`}];
+    messages=[{role:'user',content:`Basándote en tu conocimiento del catálogo de experiencias turísticas de esta fuente: ${url}\n${context?'Contexto adicional: '+context:''}\nGenera una evaluación SEI de las 10 experiencias más representativas que conoces de este catálogo o destino. Responde SOLO con el JSON solicitado.`}];
   } else if(srcMode==='pdf'&&batchFileData){
     const isImg=batchFile.type.startsWith('image/');
     messages=[{role:'user',content:[
@@ -451,12 +451,14 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
   }
 
   let result={source_name:'Catálogo',total_found:0,experiences:[]};
+  let result={source_name:'Catálogo',total_found:0,experiences:[]};
   try{
     const r=await apiCall({model:'claude-haiku-4-5-20251001',max_tokens:1500,system:sys,messages});
     const d=await r.json();
-    result=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
-  }catch(e){result={source_name:'Error',total_found:0,experiences:[],error:'Error: '+e.message};}
-
+    const rawText=(d.content?.[0]?.text||'').replace(/```json|```/g,'').trim();
+    if(!rawText||!rawText.startsWith('{'))throw new Error('Respuesta IA: '+rawText.slice(0,120));
+    result=JSON.parse(rawText);
+  }catch(e){result={source_name:'Error',total_found:0,experiences:[],error:e.message};}
   renderBatchResult(result);
   btn.disabled=false;btn.innerHTML='Evaluar todas las experiencias';
 });
