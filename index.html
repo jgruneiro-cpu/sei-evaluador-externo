@@ -140,9 +140,9 @@ textarea{resize:vertical;}
     <div class="logo">acttiv<span>.</span></div>
     <div class="sei-tag">EVALUADOR SEI · EXTERIOR</div>
   </div>
-
+ 
   <div id="v-form">
-
+ 
     <div style="flex:1">
       <div style="font-size:10.5px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Clave API Anthropic</div>
     </div>
@@ -153,7 +153,7 @@ textarea{resize:vertical;}
       <button class="tgl" data-m="max">Completa</button>
       <button class="tgl" data-m="batch">Múltiple</button>
     </div>
-
+ 
     <!-- QUICK -->
     <div id="quick-block">
       <div class="hint"><strong>Modo rápido:</strong> describe la experiencia y la IA infiere los criterios SEI automáticamente.</div>
@@ -166,7 +166,7 @@ textarea{resize:vertical;}
       <div class="field"><div class="lbl">Descripción</div><textarea id="q-desc" rows="4" placeholder="Describe la experiencia: quién la organiza, qué hace el huésped, qué elementos locales tiene, dónde ocurre..."></textarea></div>
       <button class="cta" id="q-btn" disabled>Analizar con IA</button>
     </div>
-
+ 
     <!-- MAX -->
     <div id="max-block" style="display:none">
       <div class="f2">
@@ -183,7 +183,7 @@ textarea{resize:vertical;}
       </div>
       <button class="cta" id="m-btn" disabled>Evaluar · análisis completo</button>
     </div>
-
+ 
     <!-- BATCH -->
     <div id="batch-block" style="display:none">
       <div class="hint"><strong>Evaluación múltiple:</strong> pega una URL, sube un PDF o una imagen con un catálogo de experiencias. La IA las extrae y evalúa todas con el SEI de forma aproximada.</div>
@@ -192,7 +192,7 @@ textarea{resize:vertical;}
         <button class="stab" data-s="pdf">📄 PDF / Imagen</button>
         <button class="stab" data-s="text">📝 Texto</button>
       </div>
-
+ 
       <!-- URL input -->
       <div id="src-url">
         <div class="field"><div class="lbl">URL del catálogo</div><input id="b-url" placeholder="https://www.civitatis.com/es/gran-canaria/" type="url"></div>
@@ -214,19 +214,19 @@ textarea{resize:vertical;}
       <div id="src-text" style="display:none">
         <div class="field"><div class="lbl">Pega el contenido del catálogo</div><textarea id="b-text" rows="8" placeholder="Pega aquí el listado de experiencias: nombres, descripciones, precios, duración..."></textarea></div>
       </div>
-
+ 
       <div class="field"><div class="lbl">Contexto del destino (opcional)</div><input id="b-context" placeholder="Ej: catálogo de Civitatis para hoteles de Gran Canaria, turismo sostenible..."></div>
       <button class="cta" id="b-btn" disabled>Evaluar todas las experiencias</button>
     </div>
   </div>
-
+ 
   <div id="v-result" style="display:none"></div>
 </div>
-
+ 
 <script>
 const OR='#E85D24',GR='#1C3A2F',GRM='#2E6B4F';
 const PILLARS=['Social','Físico','Nutricional','Intelectual','Mental'];
-
+ 
 const CRIT_MAX=[
   {id:'pvl',name:'Vinculación local',badge:'PVL',ico:'🌿',opts:[
     {v:10,l:'Actor local certificado con conexión directa',d:'Productor, artesano o guía nativo como protagonista verificable'},
@@ -252,18 +252,18 @@ const CRIT_MAX=[
     {v:1,l:'Mención puntual',d:'Se menciona el contexto local sin aprendizaje estructurado'},
     {v:0,l:'Sin transferencia',d:'No aporta ningún conocimiento sobre el destino'}]}
 ];
-
+ 
 const LEVELS=[
   {min:40,max:50,label:'Referente',emoji:'⭐',color:'#16a34a',bg:'rgba(22,163,74,0.08)',border:'rgba(22,163,74,0.25)',desc:'Entra en catálogo Promotur'},
   {min:30,max:39,label:'Comprometido',emoji:'🌍',color:GRM,bg:'rgba(46,107,79,0.08)',border:'rgba(46,107,79,0.25)',desc:'Entra con plan de mejora'},
   {min:20,max:29,label:'En proceso',emoji:'⚡',color:'#d97706',bg:'#fffbeb',border:'rgba(217,119,6,0.25)',desc:'Plan de mejora obligatorio'},
   {min:0,max:19,label:'Fuera',emoji:'✗',color:'#dc2626',bg:'rgba(220,38,38,0.07)',border:'rgba(220,38,38,0.22)',desc:'No acreditable'}
 ];
-
+ 
 let mode='min', srcMode='url', scores={pvl:null,eco:null,aut:null,kno:null};
 let pillarsMax={Social:0,Físico:0,Nutricional:0,Intelectual:0,Mental:0};
 let batchFile=null, batchFileData=null;
-
+ 
 function getLevel(s){return LEVELS.find(l=>s>=l.min&&s<=l.max)||LEVELS[3];}
 function barColor(s){return s>=8?'#16a34a':s>=5?OR:'#dc2626';}
 function icbScore(){return Object.values(pillarsMax).filter(v=>Number(v)>=15).length*2;}
@@ -272,7 +272,7 @@ function totalScoreMax(){
   if(Object.values(scores).some(v=>v===null))return null;
   return (scores.pvl||0)+(scores.eco||0)+(scores.aut||0)+icbScore()+(scores.kno||0);
 }
-
+ 
 // ── MODE TOGGLE ──
 document.querySelectorAll('.tgl').forEach(b=>{
   b.addEventListener('click',()=>{
@@ -285,7 +285,7 @@ document.querySelectorAll('.tgl').forEach(b=>{
     if(mode==='batch')checkBatchCTA();
   });
 });
-
+ 
 // ── QUICK MODE ──
 function quickValid(){
   return document.getElementById('q-name').value.trim()&&document.getElementById('q-cat').value&&document.getElementById('q-desc').value.trim().length>20;
@@ -294,7 +294,7 @@ function quickValid(){
   document.getElementById(id).addEventListener('input',()=>document.getElementById('q-btn').disabled=!quickValid());
   document.getElementById(id).addEventListener('change',()=>document.getElementById('q-btn').disabled=!quickValid());
 });
-
+ 
 document.getElementById('q-btn').addEventListener('click',async()=>{
   const btn=document.getElementById('q-btn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span>Analizando...';
@@ -310,7 +310,7 @@ document.getElementById('q-btn').addEventListener('click',async()=>{
   renderQuickResult({nm,cat,ai});
   btn.disabled=false;btn.innerHTML='Analizar con IA';
 });
-
+ 
 function renderQuickResult({nm,cat,ai}){
   const lv=getLevel(ai.total||0);
   const bks=[{l:'Vinculación local',b:'PVL',s:ai.pvl?.score||0,r:ai.pvl?.reason||''},{l:'Impacto económico',b:'IEL',s:ai.iel?.score||0,r:ai.iel?.reason||''},{l:'Autenticidad',b:'AUT',s:ai.aut?.score||0,r:ai.aut?.reason||''},{l:'Bienestar',b:'ICB',s:ai.icb?.score||0,r:ai.icb?.reason||''},{l:'Transf. conocimiento',b:'TCA',s:ai.tca?.score||0,r:ai.tca?.reason||''}];
@@ -327,7 +327,7 @@ function renderQuickResult({nm,cat,ai}){
   ${ai.narrative?`<div class="ai-box"><div class="ai-ttl">Análisis</div><div class="ai-txt">${ai.narrative}</div>${ai.quick_tip?`<div class="tip">💡 ${ai.quick_tip}</div>`:''}</div>`:''}
   <button class="reset" onclick="resetAll()">← Evaluar otra experiencia</button>`;
 }
-
+ 
 // ── MAX MODE ──
 function buildMaxCriteria(){
   const wrap=document.getElementById('max-criteria');
@@ -347,7 +347,7 @@ function checkMaxCTA(){
   document.getElementById('m-btn').disabled=!ok;
 }
 ['m-name','m-cat','m-desc'].forEach(id=>{document.getElementById(id).addEventListener('input',checkMaxCTA);document.getElementById(id).addEventListener('change',checkMaxCTA);});
-
+ 
 document.getElementById('m-btn').addEventListener('click',async()=>{
   const btn=document.getElementById('m-btn');btn.disabled=true;btn.innerHTML='<span class="spin"></span>Analizando...';
   const nm=document.getElementById('m-name').value.trim(),cat=document.getElementById('m-cat').value,desc=document.getElementById('m-desc').value.trim();
@@ -362,7 +362,7 @@ document.getElementById('m-btn').addEventListener('click',async()=>{
   renderMaxResult({nm,cat,sc,lv,icb,ai});
   btn.disabled=false;btn.innerHTML='Evaluar · análisis completo';
 });
-
+ 
 function renderMaxResult({nm,cat,sc,lv,icb,ai}){
   const bks=[{l:'Vinculación local',b:'PVL',s:scores.pvl},{l:'Impacto económico',b:'IEL',s:scores.eco},{l:'Autenticidad',b:'AUT',s:scores.aut},{l:'Bienestar',b:'ICB',s:icb},{l:'Transf. conocimiento',b:'TCA',s:scores.kno}];
   document.getElementById('v-form').style.display='none';
@@ -380,7 +380,7 @@ function renderMaxResult({nm,cat,sc,lv,icb,ai}){
   ${ai.benchmark?.length?`<div class="ai-box"><div class="ai-ttl">Benchmark</div>${ai.benchmark.map(b=>`<div class="ben-item"><div style="flex:1"><div class="ben-name">${b.name} <span class="ben-loc">· ${b.location||''}</span></div><div class="ben-sim">${b.similarity}</div></div>${b.sei_reference?`<div class="ben-sei">SEI ~${b.sei_reference}</div>`:''}</div>`).join('')}</div>`:''}
   <button class="reset" onclick="resetAll()">← Evaluar otra experiencia</button>`;
 }
-
+ 
 // ── BATCH MODE ──
 document.querySelectorAll('.stab').forEach(b=>{
   b.addEventListener('click',()=>{
@@ -392,7 +392,7 @@ document.querySelectorAll('.stab').forEach(b=>{
     checkBatchCTA();
   });
 });
-
+ 
 function checkBatchCTA(){
   let ok=false;
   if(srcMode==='url')ok=document.getElementById('b-url').value.trim().length>5;
@@ -400,10 +400,10 @@ function checkBatchCTA(){
   else if(srcMode==='text')ok=document.getElementById('b-text').value.trim().length>50;
   document.getElementById('b-btn').disabled=!ok;
 }
-
+ 
 document.getElementById('b-url').addEventListener('input',checkBatchCTA);
 document.getElementById('b-text').addEventListener('input',checkBatchCTA);
-
+ 
 // File upload
 const dropArea=document.getElementById('drop-area');
 const fileInput=document.getElementById('file-input');
@@ -413,7 +413,7 @@ dropArea.addEventListener('dragleave',()=>dropArea.classList.remove('dragover'))
 dropArea.addEventListener('drop',e=>{e.preventDefault();dropArea.classList.remove('dragover');handleFile(e.dataTransfer.files[0]);});
 fileInput.addEventListener('change',()=>handleFile(fileInput.files[0]));
 document.getElementById('file-remove').addEventListener('click',()=>{batchFile=null;batchFileData=null;document.getElementById('file-preview').classList.remove('show');dropArea.style.display='';checkBatchCTA();});
-
+ 
 function handleFile(file){
   if(!file)return;
   batchFile=file;
@@ -426,16 +426,16 @@ function handleFile(file){
   reader.onload=e=>{batchFileData=e.target.result.split(',')[1];checkBatchCTA();};
   reader.readAsDataURL(file);
 }
-
+ 
 // BATCH EVALUATE
 document.getElementById('b-btn').addEventListener('click',async()=>{
   const btn=document.getElementById('b-btn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span>Extrayendo y evaluando...';
   const context=document.getElementById('b-context').value.trim();
-
+ 
   let messages=[];
-  const sys=`Eres el evaluador SEI (Índice de Experiencia Sostenible) de Acttiv. Analiza el contenido proporcionado, extrae TODAS las experiencias turísticas que encuentres, y evalúa cada una con la rúbrica SEI Exterior (5 criterios × 0-10, total /50): PVL Vinculación local (10=actor local certificado, 7=indirecto, 3=tangencial, 0=no conecta), IEL Impacto económico local (10=100% local, 7=>60%, 4=mixto, 1=mínimo, 0=nada), AUT Autenticidad de destino (10=irrepetible, 8=muy representativa, 5=replicable, 2=genérica, 0=nada), ICB Bienestar (cuenta pilares Social/Físico/Nutricional/Intelectual/Mental activos × 2pts), TCA Transferencia conocimiento (10=aprendizaje genuino, 7=educativo, 4=info, 1=mención, 0=nada). Devuelve SOLO JSON sin markdown: {"source_name":"nombre de la fuente","total_found":0,"experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase explicando el nivel"}]}. Extrae el máximo de experiencias posible. En español.`;
-
+  const sys=`Eres el evaluador SEI de Acttiv. Extrae y evalúa experiencias turísticas con la rúbrica SEI Exterior (5 criterios 0-10, total /50): PVL=vinculación local, IEL=impacto económico local, AUT=autenticidad de destino, ICB=bienestar (pilares×2), TCA=transferencia conocimiento. Devuelve SOLO JSON sin markdown: {"source_name":"fuente","total_found":0,"experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase"}]}. Máximo 10 experiencias. En español.`;
+ 
   if(srcMode==='url'){
     const url=document.getElementById('b-url').value.trim();
     messages=[{role:'user',content:`Analiza las experiencias turísticas disponibles en esta URL: ${url}\n${context?'Contexto: '+context:''}\nUsa tu conocimiento de este catálogo/destino para evaluar cada experiencia con el SEI.`}];
@@ -449,26 +449,26 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
     const txt=document.getElementById('b-text').value.trim();
     messages=[{role:'user',content:`Extrae y evalúa todas las experiencias del siguiente catálogo:\n\n${txt}\n${context?'Contexto: '+context:''}`}];
   }
-
+ 
   let result={source_name:'Catálogo',total_found:0,experiences:[]};
   try{
-    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:4000,system:sys,messages});
+    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:800,system:sys,messages});
     const d=await r.json();
     result=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
   }catch(e){result={source_name:'Error',total_found:0,experiences:[],error:'No se pudo conectar o analizar. Verifica la conexión.'};}
-
+ 
   renderBatchResult(result);
   btn.disabled=false;btn.innerHTML='Evaluar todas las experiencias';
 });
-
+ 
 function renderBatchResult(data){
   const exps=data.experiences||[];
   const counts={ref:exps.filter(e=>e.level==='Referente').length,com:exps.filter(e=>e.level==='Comprometido').length,proc:exps.filter(e=>e.level==='En proceso').length,out:exps.filter(e=>e.level==='Fuera').length};
   const sorted=[...exps].sort((a,b)=>b.total-a.total);
-
+ 
   document.getElementById('v-form').style.display='none';
   const rv=document.getElementById('v-result');rv.style.display='';
-
+ 
   rv.innerHTML=`
   <div class="batch-header">
     <div class="batch-title">${data.source_name||'Catálogo evaluado'}</div>
@@ -508,7 +508,7 @@ function renderBatchResult(data){
   ${data.error?`<div style="background:#fff5f5;border:1px solid rgba(220,38,38,.2);border-radius:9px;padding:12px 14px;font-size:12.5px;color:#dc2626;margin-bottom:12px;">${data.error}</div>`:''}
   <button class="reset" onclick="resetAll()">← Nueva evaluación</button>`;
 }
-
+ 
 // ── RESET ──
 function resetAll(){
   scores={pvl:null,eco:null,aut:null,kno:null};
@@ -523,7 +523,7 @@ function resetAll(){
   document.getElementById('v-form').style.display='';
   if(mode==='max'){buildMaxCriteria();buildICB();checkMaxCTA();}
 }
-
+ 
 function apiCall(body){
   return fetch('/.netlify/functions/sei',{
     method:'POST',
@@ -534,3 +534,4 @@ function apiCall(body){
 </script>
 </body>
 </html>
+ 
