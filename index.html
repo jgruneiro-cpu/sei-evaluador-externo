@@ -8,38 +8,42 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Poppins',sans-serif;background:#f5f5f3;color:#1a1a1a;min-height:100vh;}
-.wrap{max-width:960px;margin:0 auto;padding:40px 52px;background:#fff;min-height:100vh;}
-.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #f0f0f0;}
+body{font-family:'Poppins',sans-serif;background:#f0efed;color:#1a1a1a;min-height:100vh;}
+.wrap{max-width:980px;margin:0 auto;background:#fff;min-height:100vh;padding:36px 56px;}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid #f0f0f0;}
 .logo{font-size:16px;font-weight:700;letter-spacing:-.02em;}
 .logo span{color:#E85D24;}
-.sei-tag{background:#E85D24;color:#fff;font-size:10px;font-weight:700;padding:4px 11px;border-radius:20px;letter-spacing:.05em;}
-.toggle{display:flex;background:#f5f5f5;border-radius:10px;padding:3px;gap:2px;margin-bottom:24px;}
-.tgl{flex:1;padding:9px 10px;border:none;background:none;border-radius:8px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;color:#999;}
+.tag{background:#E85D24;color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.05em;}
+/* Toggle */
+.toggle{display:flex;background:#f5f5f5;border-radius:10px;padding:3px;gap:2px;margin-bottom:28px;}
+.tgl{flex:1;padding:10px 14px;border:none;background:none;border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:#999;transition:all .15s;}
 .tgl.on{background:#fff;color:#1a1a1a;box-shadow:0 1px 4px rgba(0,0,0,.1);}
-.lbl{font-size:10.5px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;}
+/* Form */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
 .field{margin-bottom:16px;}
+.lbl{font-size:10.5px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:block;}
 input,select,textarea{width:100%;border:1px solid #e8e8e8;border-radius:9px;padding:10px 13px;font-family:'Poppins',sans-serif;font-size:13px;color:#1a1a1a;outline:none;transition:border .15s;background:#fff;}
 input:focus,select:focus,textarea:focus{border-color:#E85D24;}
 textarea{resize:vertical;}
-.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.hint{background:rgba(232,93,36,.05);border:1px solid rgba(232,93,36,.15);border-radius:10px;padding:13px 16px;margin-bottom:20px;font-size:12.5px;color:#7c2d12;line-height:1.65;}
+.hint{background:rgba(232,93,36,.05);border:1px solid rgba(232,93,36,.15);border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:12.5px;color:#7c2d12;line-height:1.65;}
+/* Criteria */
 .crit{border:1px solid #f0f0f0;border-radius:13px;padding:18px;margin-bottom:12px;transition:border .15s;}
 .crit.scored{border-color:rgba(232,93,36,.35);}
 .crit-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.crit-ico{width:34px;height:34px;background:#f5f5f5;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.crit-ico{width:34px;height:34px;background:#f5f5f5;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;}
 .crit-name{font-size:13.5px;font-weight:600;}
 .crit-sc{margin-left:auto;font-size:11px;font-weight:700;color:#E85D24;background:rgba(232,93,36,.08);padding:3px 9px;border-radius:10px;}
 .opts{display:flex;flex-direction:column;gap:7px;}
 .opt{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border:1px solid #f0f0f0;border-radius:9px;cursor:pointer;transition:all .15s;user-select:none;}
 .opt:hover{border-color:#E85D24;background:rgba(232,93,36,.03);}
 .opt.sel{border-color:#E85D24;background:rgba(232,93,36,.06);}
-.radio{width:17px;height:17px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;margin-top:2px;transition:all .15s;position:relative;}
+.radio{width:17px;height:17px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;margin-top:2px;position:relative;}
 .opt.sel .radio{border-color:#E85D24;}
 .opt.sel .radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:#E85D24;}
 .opt-lbl{font-size:12.5px;font-weight:500;flex:1;line-height:1.35;}
 .opt-desc{font-size:11.5px;color:#888;margin-top:3px;line-height:1.45;}
 .opt-pts{font-size:11.5px;font-weight:700;color:#E85D24;white-space:nowrap;padding-top:2px;}
+/* Pillars */
 .pil-hint{font-size:11.5px;color:#999;margin-bottom:11px;line-height:1.5;}
 .pil-rows{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 .pil-row{display:flex;align-items:center;gap:8px;}
@@ -47,19 +51,19 @@ textarea{resize:vertical;}
 .pil-inp{width:70px!important;text-align:center;padding:7px 10px!important;}
 .pil-sym{font-size:12px;color:#999;}
 .pil-total{text-align:center;font-size:12.5px;margin-top:12px;color:#999;}
-.pil-total .pn{font-weight:700;}
-.ok{color:#16a34a;}.over{color:#dc2626;}
-.cta{width:100%;padding:14px;background:#E85D24;color:#fff;border:none;border-radius:11px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:8px;letter-spacing:.01em;}
+.pn{font-weight:700;}.ok{color:#16a34a;}.over{color:#dc2626;}
+/* CTA */
+.cta{width:100%;padding:14px;background:#E85D24;color:#fff;border:none;border-radius:11px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;letter-spacing:.01em;}
 .cta:hover{background:#d0521f;}.cta:disabled{opacity:.4;cursor:not-allowed;}
 .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* Results single */
+/* Single result */
 .score-hero{text-align:center;padding:30px 24px;border-radius:16px;margin-bottom:22px;}
 .sc-num{font-size:60px;font-weight:700;line-height:1;}
 .sc-den{font-size:22px;font-weight:400;opacity:.55;}
 .sc-lv{font-size:15px;font-weight:600;margin-top:9px;}
-.sc-desc{font-size:12.5px;margin-top:5px;opacity:.72;}
-.sc-name{font-size:13px;font-weight:500;margin-top:12px;opacity:.75;}
+.sc-ds{font-size:12.5px;margin-top:5px;opacity:.72;}
+.sc-nm{font-size:13px;font-weight:500;margin-top:12px;opacity:.75;}
 .bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px;}
 .bk{background:#f9f9f9;border-radius:11px;padding:13px 15px;}
 .bk-lbl{font-size:10px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
@@ -84,70 +88,52 @@ textarea{resize:vertical;}
 .ben-sei{font-size:11px;font-weight:700;color:#1C3A2F;background:rgba(28,58,47,.09);padding:3px 9px;border-radius:7px;white-space:nowrap;margin-left:auto;flex-shrink:0;}
 .tip{background:#f0fdf4;border:1px solid rgba(22,163,74,.2);border-radius:9px;padding:11px 14px;font-size:12.5px;color:#166534;line-height:1.6;margin-top:10px;}
 .uniq{background:rgba(232,93,36,.06);border:1px solid rgba(232,93,36,.2);border-radius:9px;padding:11px 14px;font-size:12.5px;color:#7c2d12;line-height:1.6;margin-top:10px;}
-.reset{width:100%;padding:11px;background:#f5f5f5;border:none;border-radius:9px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;color:#666;cursor:pointer;margin-top:12px;transition:background .15s;}
-.reset:hover{background:#ebebeb;}
-/* BATCH results */
-.batch-header{margin-bottom:20px;}
-.batch-title{font-size:18px;font-weight:700;margin-bottom:4px;}
-.batch-sub{font-size:13px;color:#888;}
-.batch-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px;}
-.bst{background:#f9f9f9;border-radius:11px;padding:12px;text-align:center;}
-.bst-n{font-size:22px;font-weight:700;line-height:1;}
-.bst-l{font-size:10px;color:#999;margin-top:4px;line-height:1.3;}
-/* Experience row */
-.exp-row{border:1px solid #f0f0f0;border-radius:13px;padding:16px 18px;margin-bottom:10px;transition:border .15s;}
-.exp-row:hover{border-color:#e0e0e0;}
-.exp-row-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
-.exp-level-badge{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.exp-name{font-size:13.5px;font-weight:600;color:#1a1a1a;line-height:1.3;flex:1;}
-.exp-cat{font-size:11px;color:#888;margin-top:2px;}
-.exp-score-big{font-size:22px;font-weight:700;line-height:1;}
-.exp-score-den{font-size:12px;font-weight:400;color:#bbb;}
-.exp-level-lbl{font-size:10px;font-weight:700;margin-top:1px;}
-.exp-bars{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px;}
-.exp-bar-item{text-align:center;}
-.exp-bar-lbl{font-size:9px;font-weight:700;color:#999;letter-spacing:.04em;margin-bottom:3px;}
-.exp-bar-n{font-size:11px;font-weight:700;}
-.exp-bar-track{height:3px;background:#f0f0f0;border-radius:2px;margin-top:3px;}
-.exp-bar-fill{height:3px;border-radius:2px;}
-.exp-reason{font-size:11.5px;color:#666;line-height:1.55;border-top:1px solid #f5f5f5;padding-top:8px;}
-.exp-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-right:4px;margin-bottom:3px;}
-/* Source input */
-.source-tabs{display:flex;gap:8px;margin-bottom:16px;}
-.stab{flex:1;padding:10px;border:1px solid #e8e8e8;border-radius:9px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;color:#888;background:#fff;text-align:center;}
+/* Batch source tabs */
+.stabs{display:flex;gap:8px;margin-bottom:16px;}
+.stab{flex:1;padding:10px;border:1px solid #e8e8e8;border-radius:9px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;cursor:pointer;color:#888;background:#fff;text-align:center;transition:all .15s;}
 .stab.on{border-color:#E85D24;color:#E85D24;background:rgba(232,93,36,.04);}
-.upload-area{border:2px dashed #e8e8e8;border-radius:13px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:16px;}
-.upload-area:hover{border-color:#E85D24;background:rgba(232,93,36,.02);}
-.upload-area.dragover{border-color:#E85D24;background:rgba(232,93,36,.04);}
-.upload-ico{font-size:32px;margin-bottom:10px;}
-.upload-txt{font-size:13px;font-weight:500;color:#888;line-height:1.6;}
-.upload-txt span{color:#E85D24;font-weight:600;}
-#file-input{display:none;}
-.file-preview{background:#f9f9f9;border-radius:9px;padding:12px 14px;margin-bottom:16px;display:none;align-items:center;gap:10px;}
-.file-preview.show{display:flex;}
-.file-ico{font-size:20px;}
-.file-name{font-size:12.5px;font-weight:500;color:#1a1a1a;flex:1;}
-.file-remove{background:none;border:none;color:#999;cursor:pointer;font-size:18px;padding:0 4px;}
-.progress-wrap{margin:16px 0;}
-.progress-lbl{font-size:12px;color:#888;margin-bottom:6px;}
-.progress-track{height:4px;background:#f0f0f0;border-radius:2px;}
-.progress-fill{height:4px;background:#E85D24;border-radius:2px;transition:width .3s;}
+.drop{border:2px dashed #e8e8e8;border-radius:13px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:16px;}
+.drop:hover{border-color:#E85D24;background:rgba(232,93,36,.02);}
+.drop-ico{font-size:32px;margin-bottom:10px;}
+.drop-txt{font-size:13px;font-weight:500;color:#888;line-height:1.6;}
+.drop-txt span{color:#E85D24;font-weight:600;}
+.fpreview{background:#f9f9f9;border-radius:9px;padding:12px 14px;margin-bottom:16px;display:none;align-items:center;gap:10px;}
+.fpreview.show{display:flex;}
+.fname{font-size:12.5px;font-weight:500;flex:1;}
+.frem{background:none;border:none;color:#999;cursor:pointer;font-size:18px;}
+/* Batch results kanban */
+.kanban{display:flex;gap:16px;align-items:flex-start;margin-top:8px;}
+.kcol{flex:1;min-width:0;border-radius:14px;padding:14px 13px;}
+.kcol-hd{display:flex;align-items:center;gap:7px;margin-bottom:14px;}
+.kcol-title{font-size:13px;font-weight:700;}
+.kcol-count{margin-left:auto;background:#fff;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700;}
+.kcard{background:#fff;border:1px solid #f0f0f0;border-radius:12px;padding:14px 15px;margin-bottom:10px;}
+.kcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.kcard-name{font-size:13px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px;}
+.kcard-cat{font-size:10.5px;color:#bbb;}
+.kcard-score{font-size:24px;font-weight:700;line-height:1;text-align:right;flex-shrink:0;}
+.kcard-den{font-size:10px;color:#bbb;font-weight:400;}
+.kcard-bars{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:8px;}
+.kbar{background:#f5f5f5;border-radius:6px;padding:5px 4px;text-align:center;}
+.kbar-lbl{font-size:8.5px;font-weight:700;color:#ccc;letter-spacing:.03em;}
+.kbar-n{font-size:14px;font-weight:700;line-height:1.2;}
+.kcard-reason{font-size:11px;color:#888;line-height:1.55;border-top:1px solid #f5f5f5;padding-top:8px;}
+.empty-col{text-align:center;padding:20px 0;font-size:12px;color:#ccc;}
+/* Reset */
+.reset{width:100%;padding:11px;background:#f5f5f5;border:none;border-radius:9px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;color:#666;cursor:pointer;margin-top:16px;}
+.reset:hover{background:#ebebeb;}
+.err-box{background:#fff5f5;border:1px solid rgba(220,38,38,.2);border-radius:9px;padding:12px 14px;font-size:12px;color:#dc2626;margin-bottom:14px;}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="hdr">
     <div class="logo">acttiv<span>.</span></div>
-    <div class="sei-tag">EVALUADOR SEI · EXTERIOR</div>
+    <div class="tag">EVALUADOR SEI · EXTERIOR</div>
   </div>
 
-  <div id="v-form" style="max-width:680px;margin:0 auto;">
-
-    <div style="flex:1">
-      <div style="font-size:10.5px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Clave API Anthropic</div>
-    </div>
-    <button id="api-key-save"  style="background:#d97706;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">Guardar</button>
-  </div>
+  <!-- FORM -->
+  <div id="v-form">
     <div class="toggle">
       <button class="tgl on" data-m="min">Rápida</button>
       <button class="tgl" data-m="max">Completa</button>
@@ -155,28 +141,28 @@ textarea{resize:vertical;}
     </div>
 
     <!-- QUICK -->
-    <div id="quick-block">
+    <div id="blk-min">
       <div class="hint"><strong>Modo rápido:</strong> describe la experiencia y la IA infiere los criterios SEI automáticamente.</div>
-      <div class="f2">
-        <div class="field" style="margin-bottom:0"><div class="lbl">Nombre</div><input id="q-name" placeholder="Tour gastronómico Agaete..."></div>
-        <div class="field" style="margin-bottom:0"><div class="lbl">Categoría</div>
+      <div class="g2">
+        <div><label class="lbl">Nombre</label><input id="q-name" placeholder="Tour gastronómico Agaete..."></div>
+        <div><label class="lbl">Categoría</label>
           <select id="q-cat"><option value="">Selecciona...</option><option>Gastronomía</option><option>Naturaleza</option><option>Cultura y patrimonio</option><option>Deporte y aventura</option><option>Artesanía</option><option>Bienestar</option></select>
         </div>
       </div>
-      <div class="field"><div class="lbl">Descripción</div><textarea id="q-desc" rows="4" placeholder="Describe la experiencia: quién la organiza, qué hace el huésped, qué elementos locales tiene, dónde ocurre..."></textarea></div>
+      <div class="field"><label class="lbl">Descripción</label><textarea id="q-desc" rows="4" placeholder="Quién la organiza, qué hace el huésped, qué elementos locales tiene, dónde ocurre..."></textarea></div>
       <button class="cta" id="q-btn" disabled>Analizar con IA</button>
     </div>
 
     <!-- MAX -->
-    <div id="max-block" style="display:none">
-      <div class="f2">
-        <div class="field" style="margin-bottom:0"><div class="lbl">Nombre</div><input id="m-name" placeholder="Tour gastronómico Agaete..."></div>
-        <div class="field" style="margin-bottom:0"><div class="lbl">Categoría</div>
+    <div id="blk-max" style="display:none">
+      <div class="g2">
+        <div><label class="lbl">Nombre</label><input id="m-name" placeholder="Tour gastronómico Agaete..."></div>
+        <div><label class="lbl">Categoría</label>
           <select id="m-cat"><option value="">Selecciona...</option><option>Gastronomía</option><option>Naturaleza</option><option>Cultura y patrimonio</option><option>Deporte y aventura</option><option>Artesanía</option><option>Bienestar</option></select>
         </div>
       </div>
-      <div class="field"><div class="lbl">Descripción breve</div><textarea id="m-desc" rows="2" placeholder="Describe la experiencia en 1-2 frases..."></textarea></div>
-      <div id="max-criteria"></div>
+      <div class="field"><label class="lbl">Descripción breve</label><textarea id="m-desc" rows="2" placeholder="Describe la experiencia en 1-2 frases..."></textarea></div>
+      <div id="max-crits"></div>
       <div class="crit" id="icb-card">
         <div class="crit-hd"><div class="crit-ico">🌱</div><div class="crit-name">Bienestar del huésped</div><div class="crit-sc" id="icb-badge">ICB · 0/10</div></div>
         <div id="icb-body"></div>
@@ -185,56 +171,39 @@ textarea{resize:vertical;}
     </div>
 
     <!-- BATCH -->
-    <div id="batch-block" style="display:none">
-      <div class="hint"><strong>Evaluación múltiple:</strong> pega una URL, sube un PDF o una imagen con un catálogo de experiencias. La IA las extrae y evalúa todas con el SEI de forma aproximada.</div>
-      <div class="source-tabs">
+    <div id="blk-batch" style="display:none">
+      <div class="hint"><strong>Evaluación múltiple:</strong> pega una URL, sube un PDF o imagen, o pega texto con un catálogo. La IA extrae y evalúa todas las experiencias con el SEI.</div>
+      <div class="stabs">
         <button class="stab on" data-s="url">🔗 URL</button>
         <button class="stab" data-s="pdf">📄 PDF / Imagen</button>
         <button class="stab" data-s="text">📝 Texto</button>
       </div>
-
-      <!-- URL input -->
-      <div id="src-url">
-        <div class="field"><div class="lbl">URL del catálogo</div><input id="b-url" placeholder="https://www.civitatis.com/es/gran-canaria/" type="url"></div>
-      </div>
-      <!-- File input -->
+      <div id="src-url"><div class="field"><label class="lbl">URL del catálogo</label><input id="b-url" type="url" placeholder="https://www.civitatis.com/es/gran-canaria/"></div></div>
       <div id="src-pdf" style="display:none">
-        <div class="upload-area" id="drop-area">
-          <div class="upload-ico">📎</div>
-          <div class="upload-txt">Arrastra el PDF o imagen aquí<br>o <span>haz clic para seleccionar</span></div>
-          <input type="file" id="file-input" accept=".pdf,image/*">
-        </div>
-        <div class="file-preview" id="file-preview">
-          <div class="file-ico" id="file-ico">📄</div>
-          <div class="file-name" id="file-name"></div>
-          <button class="file-remove" id="file-remove">✕</button>
-        </div>
+        <div class="drop" id="drop-area"><div class="drop-ico">📎</div><div class="drop-txt">Arrastra el PDF o imagen aquí<br>o <span>haz clic para seleccionar</span></div><input type="file" id="file-inp" accept=".pdf,image/*" style="display:none"></div>
+        <div class="fpreview" id="fpreview"><span id="f-ico">📄</span><span class="fname" id="f-name"></span><button class="frem" id="f-rem">✕</button></div>
       </div>
-      <!-- Text input -->
-      <div id="src-text" style="display:none">
-        <div class="field"><div class="lbl">Pega el contenido del catálogo</div><textarea id="b-text" rows="8" placeholder="Pega aquí el listado de experiencias: nombres, descripciones, precios, duración..."></textarea></div>
-      </div>
-
-      <div class="field"><div class="lbl">Contexto del destino (opcional)</div><input id="b-context" placeholder="Ej: catálogo de Civitatis para hoteles de Gran Canaria, turismo sostenible..."></div>
+      <div id="src-text" style="display:none"><div class="field"><label class="lbl">Contenido del catálogo</label><textarea id="b-text" rows="8" placeholder="Pega aquí el listado de experiencias..."></textarea></div></div>
+      <div class="field"><label class="lbl">Contexto del destino (opcional)</label><input id="b-ctx" placeholder="Ej: catálogo Civitatis Gran Canaria, turismo sostenible..."></div>
       <button class="cta" id="b-btn" disabled>Evaluar todas las experiencias</button>
     </div>
   </div>
 
+  <!-- RESULT -->
   <div id="v-result" style="display:none"></div>
 </div>
 
 <script>
-const OR='#E85D24',GR='#1C3A2F',GRM='#2E6B4F';
+const OR='#E85D24', GRM='#2E6B4F';
 const PILLARS=['Social','Físico','Nutricional','Intelectual','Mental'];
-
 const CRIT_MAX=[
   {id:'pvl',name:'Vinculación local',badge:'PVL',ico:'🌿',opts:[
-    {v:10,l:'Actor local certificado con conexión directa',d:'Productor, artesano o guía nativo como protagonista verificable'},
+    {v:10,l:'Actor local certificado protagonista',d:'Productor, artesano o guía nativo verificable'},
     {v:7,l:'Conexión indirecta con territorio',d:'El territorio aparece pero sin actor local protagonista'},
-    {v:3,l:'Tangencial',d:'Se menciona Canarias pero sin presencia real del tejido productivo'},
-    {v:0,l:'No conecta',d:'Sin ningún vínculo con la comunidad o entorno local'}]},
+    {v:3,l:'Tangencial',d:'Se menciona Canarias sin presencia real del tejido productivo'},
+    {v:0,l:'No conecta',d:'Sin vínculo con la comunidad o entorno local'}]},
   {id:'eco',name:'Impacto económico local',badge:'IEL',ico:'💶',opts:[
-    {v:10,l:'Operador 100% local, producto del territorio',d:'Todo el gasto genera empleo e ingreso en la economía canaria'},
+    {v:10,l:'Operador 100% local',d:'Todo el gasto genera empleo e ingreso en la economía canaria'},
     {v:7,l:'Mayoría del gasto local (>60%)',d:'La mayor parte del dinero queda en el archipiélago'},
     {v:4,l:'Mixto',d:'Parte local, parte cadena o proveedor externo'},
     {v:1,l:'Mínima retención local',d:'Operador externo con presencia local mínima'},
@@ -244,15 +213,14 @@ const CRIT_MAX=[
     {v:8,l:'Muy representativa de Canarias',d:'Difícil de replicar con la misma autenticidad'},
     {v:5,l:'Representativa pero replicable',d:'Podría ocurrir con adaptación en otro destino'},
     {v:2,l:'Genérica',d:'Podría ocurrir en cualquier destino de sol y playa'},
-    {v:0,l:'Sin relación con el destino',d:'No hay ningún elemento identitario de Canarias'}]},
+    {v:0,l:'Sin relación con el destino',d:'No hay elemento identitario de Canarias'}]},
   {id:'kno',name:'Transferencia de conocimiento',badge:'TCA',ico:'🎓',opts:[
-    {v:10,l:'Aprendizaje genuino y memorable',d:'Taller con artesano, productor explica su proceso, guía con conocimiento aborigen'},
+    {v:10,l:'Aprendizaje genuino y memorable',d:'Taller con artesano, productor explica proceso, guía con conocimiento aborigen'},
     {v:7,l:'Componente educativo claro pero superficial',d:'Información relevante sin interacción profunda'},
-    {v:4,l:'Información sin interacción real',d:'Paneles, audioguías o narración sin protagonista local'},
-    {v:1,l:'Mención puntual',d:'Se menciona el contexto local sin aprendizaje estructurado'},
-    {v:0,l:'Sin transferencia',d:'No aporta ningún conocimiento sobre el destino'}]}
+    {v:4,l:'Información sin interacción real',d:'Paneles, audioguías sin protagonista local'},
+    {v:1,l:'Mención puntual',d:'Se menciona el contexto sin aprendizaje estructurado'},
+    {v:0,l:'Sin transferencia',d:'No aporta conocimiento sobre el destino'}]}
 ];
-
 const LEVELS=[
   {min:40,max:50,label:'Referente',emoji:'⭐',color:'#16a34a',bg:'rgba(22,163,74,0.08)',border:'rgba(22,163,74,0.25)',desc:'Entra en catálogo Promotur'},
   {min:30,max:39,label:'Comprometido',emoji:'🌍',color:GRM,bg:'rgba(46,107,79,0.08)',border:'rgba(46,107,79,0.25)',desc:'Entra con plan de mejora'},
@@ -260,40 +228,41 @@ const LEVELS=[
   {min:0,max:19,label:'Fuera',emoji:'✗',color:'#dc2626',bg:'rgba(220,38,38,0.07)',border:'rgba(220,38,38,0.22)',desc:'No acreditable'}
 ];
 
-let mode='min', srcMode='url', scores={pvl:null,eco:null,aut:null,kno:null};
+let mode='min', srcMode='url';
+let scores={pvl:null,eco:null,aut:null,kno:null};
 let pillarsMax={Social:0,Físico:0,Nutricional:0,Intelectual:0,Mental:0};
 let batchFile=null, batchFileData=null;
 
 function getLevel(s){return LEVELS.find(l=>s>=l.min&&s<=l.max)||LEVELS[3];}
-function barColor(s){return s>=8?'#16a34a':s>=5?OR:'#dc2626';}
+function bc(s){return s>=8?'#16a34a':s>=5?OR:'#dc2626';}
 function icbScore(){return Object.values(pillarsMax).filter(v=>Number(v)>=15).length*2;}
 function pillarTotal(){return Object.values(pillarsMax).reduce((a,b)=>a+Number(b||0),0);}
-function totalScoreMax(){
-  if(Object.values(scores).some(v=>v===null))return null;
-  return (scores.pvl||0)+(scores.eco||0)+(scores.aut||0)+icbScore()+(scores.kno||0);
+
+function showForm(){document.getElementById('v-form').style.display='block';document.getElementById('v-result').style.display='none';}
+function showResult(html){document.getElementById('v-form').style.display='none';const r=document.getElementById('v-result');r.innerHTML=html;r.style.display='block';}
+
+function apiCall(body){
+  return fetch('/.netlify/functions/sei',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 }
 
 // ── MODE TOGGLE ──
 document.querySelectorAll('.tgl').forEach(b=>{
   b.addEventListener('click',()=>{
     mode=b.dataset.m;
-    document.querySelectorAll('.tgl').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-    document.getElementById('quick-block').style.display=mode==='min'?'':'none';
-    document.getElementById('max-block').style.display=mode==='max'?'':'none';
-    document.getElementById('batch-block').style.display=mode==='batch'?'':'none';
-    if(mode==='max'){buildMaxCriteria();buildICB();checkMaxCTA();}
-    if(mode==='batch')checkBatchCTA();
+    document.querySelectorAll('.tgl').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById('blk-min').style.display=mode==='min'?'block':'none';
+    document.getElementById('blk-max').style.display=mode==='max'?'block':'none';
+    document.getElementById('blk-batch').style.display=mode==='batch'?'block':'none';
+    if(mode==='max'){buildMaxCrits();buildICB();}
+    if(mode==='batch')checkB();
   });
 });
 
 // ── QUICK MODE ──
-function quickValid(){
-  return document.getElementById('q-name').value.trim()&&document.getElementById('q-cat').value&&document.getElementById('q-desc').value.trim().length>20;
-}
-['q-name','q-cat','q-desc'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',()=>document.getElementById('q-btn').disabled=!quickValid());
-  document.getElementById(id).addEventListener('change',()=>document.getElementById('q-btn').disabled=!quickValid());
-});
+function quickOK(){return document.getElementById('q-name').value.trim()&&document.getElementById('q-cat').value&&document.getElementById('q-desc').value.trim().length>15;}
+['q-name','q-cat','q-desc'].forEach(id=>document.getElementById(id).addEventListener('input',()=>document.getElementById('q-btn').disabled=!quickOK()));
+['q-cat'].forEach(id=>document.getElementById(id).addEventListener('change',()=>document.getElementById('q-btn').disabled=!quickOK()));
 
 document.getElementById('q-btn').addEventListener('click',async()=>{
   const btn=document.getElementById('q-btn');
@@ -301,224 +270,164 @@ document.getElementById('q-btn').addEventListener('click',async()=>{
   const nm=document.getElementById('q-name').value.trim();
   const cat=document.getElementById('q-cat').value;
   const desc=document.getElementById('q-desc').value.trim();
-  const sys=`Eres el evaluador SEI de Acttiv para experiencias turísticas fuera del hotel en Canarias. Infiere la puntuación a partir de la descripción. Rúbrica SEI (5 criterios × 0-10, total /50): PVL Vinculación local, IEL Impacto económico, AUT Autenticidad de destino, ICB Bienestar (pilares Social/Físico/Nutricional/Intelectual/Mental activos ≥15% × 2pts), TCA Transferencia conocimiento. Devuelve SOLO JSON sin markdown: {"pvl":{"score":0,"reason":""},"iel":{"score":0,"reason":""},"aut":{"score":0,"reason":""},"icb":{"score":0,"pillars":[],"reason":""},"tca":{"score":0,"reason":""},"total":0,"level":"","narrative":"","quick_tip":""}`;
+  const sys=`Eres el evaluador SEI de Acttiv para experiencias fuera del hotel en Canarias. Infiere la puntuación SEI Exterior (5 criterios 0-10, total /50): PVL vinculación local, IEL impacto económico local, AUT autenticidad de destino, ICB bienestar (pilares Social/Físico/Nutricional/Intelectual/Mental activos≥15%×2pts), TCA transferencia conocimiento. Devuelve SOLO JSON válido sin markdown: {"pvl":{"score":0,"reason":""},"iel":{"score":0,"reason":""},"aut":{"score":0,"reason":""},"icb":{"score":0,"pillars":[],"reason":""},"tca":{"score":0,"reason":""},"total":0,"level":"","narrative":"2-3 frases","quick_tip":"consejo concreto"}`;
   let ai={};
   try{
-    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:1000,system:sys,messages:[{role:'user',content:`Experiencia: ${nm}\nCategoría: ${cat}\nDescripción: ${desc}`}]});
-    const d=await r.json();ai=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
-  }catch(e){ai={pvl:{score:0,reason:'Error de conexión'},iel:{score:0,reason:''},aut:{score:0,reason:''},icb:{score:0,pillars:[],reason:''},tca:{score:0,reason:''},total:0,level:'—',narrative:'Conecta a internet para el análisis.',quick_tip:''};}
-  renderQuickResult({nm,cat,ai});
+    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:1000,system:sys,messages:[{role:'user',content:'Experiencia: '+nm+'\nCategoría: '+cat+'\nDescripción: '+desc}]});
+    const d=await r.json();
+    ai=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
+  }catch(e){ai={pvl:{score:0,reason:'Error'},iel:{score:0,reason:''},aut:{score:0,reason:''},icb:{score:0,pillars:[],reason:''},tca:{score:0,reason:''},total:0,level:'—',narrative:'Error: '+e.message,quick_tip:''};}
+  const lv=getLevel(ai.total||0);
+  const bks=[{l:'Vinculación local',s:ai.pvl?.score||0,r:ai.pvl?.reason||''},{l:'Impacto económico',s:ai.iel?.score||0,r:ai.iel?.reason||''},{l:'Autenticidad',s:ai.aut?.score||0,r:ai.aut?.reason||''},{l:'Bienestar',s:ai.icb?.score||0,r:ai.icb?.reason||''},{l:'Transf. conocimiento',s:ai.tca?.score||0,r:ai.tca?.reason||''}];
+  showResult(`<div class="score-hero" style="background:${lv.bg};border:1px solid ${lv.border}"><div style="font-size:26px;margin-bottom:8px">${lv.emoji}</div><div class="sc-num" style="color:${lv.color}">${ai.total||0}<span class="sc-den">/50</span></div><div class="sc-lv" style="color:${lv.color}">${lv.label}</div><div class="sc-ds" style="color:${lv.color}">${lv.desc}</div><div class="sc-nm">${nm} · ${cat}</div></div><div class="bk-grid">${bks.map(b=>'<div class="bk"><div class="bk-lbl">'+b.l+'</div><div class="bk-n" style="color:'+bc(b.s)+'">'+b.s+'<span class="bk-d">/10</span></div>'+(b.r?'<div style="font-size:11.5px;color:#666;margin-top:4px;line-height:1.45">'+b.r+'</div>':'')+'<div class="bk-bar"><div class="bk-fill" style="width:'+b.s*10+'%;background:'+bc(b.s)+'"></div></div></div>').join('')}</div>${ai.narrative?'<div class="ai-box"><div class="ai-ttl">Análisis</div><div class="ai-txt">'+ai.narrative+'</div>'+(ai.quick_tip?'<div class="tip">💡 '+ai.quick_tip+'</div>':'')+'</div>':''}<button class="reset" onclick="resetAll()">← Nueva evaluación</button>`);
   btn.disabled=false;btn.innerHTML='Analizar con IA';
 });
 
-function renderQuickResult({nm,cat,ai}){
-  const lv=getLevel(ai.total||0);
-  const bks=[{l:'Vinculación local',b:'PVL',s:ai.pvl?.score||0,r:ai.pvl?.reason||''},{l:'Impacto económico',b:'IEL',s:ai.iel?.score||0,r:ai.iel?.reason||''},{l:'Autenticidad',b:'AUT',s:ai.aut?.score||0,r:ai.aut?.reason||''},{l:'Bienestar',b:'ICB',s:ai.icb?.score||0,r:ai.icb?.reason||''},{l:'Transf. conocimiento',b:'TCA',s:ai.tca?.score||0,r:ai.tca?.reason||''}];
-  document.getElementById('v-form').style.display='none';
-  const rv=document.getElementById('v-result');rv.style.display='block';
-  rv.innerHTML=`<div class="score-hero" style="background:${lv.bg};border:1px solid ${lv.border}">
-    <div style="font-size:26px;margin-bottom:8px">${lv.emoji}</div>
-    <div class="sc-num" style="color:${lv.color}">${ai.total||0}<span class="sc-den">/50</span></div>
-    <div class="sc-lv" style="color:${lv.color}">${lv.label}</div>
-    <div class="sc-desc" style="color:${lv.color}">${lv.desc}</div>
-    <div class="sc-name">${nm} · ${cat}</div>
-  </div>
-  <div class="bk-grid">${bks.map(b=>`<div class="bk"><div class="bk-lbl">${b.l}</div><div class="bk-n" style="color:${barColor(b.s)}">${b.s}<span class="bk-d">/10</span></div>${b.r?`<div style="font-size:11.5px;color:#666;margin-top:4px;line-height:1.45">${b.r}</div>`:''}<div class="bk-bar"><div class="bk-fill" style="width:${b.s*10}%;background:${barColor(b.s)}"></div></div></div>`).join('')}</div>
-  ${ai.narrative?`<div class="ai-box"><div class="ai-ttl">Análisis</div><div class="ai-txt">${ai.narrative}</div>${ai.quick_tip?`<div class="tip">💡 ${ai.quick_tip}</div>`:''}</div>`:''}
-  <button class="reset" onclick="resetAll()">← Evaluar otra experiencia</button>`;
-}
-
 // ── MAX MODE ──
-function buildMaxCriteria(){
-  const wrap=document.getElementById('max-criteria');
-  wrap.innerHTML=CRIT_MAX.map(c=>{const sel=scores[c.id];return`<div class="crit${sel!==null?' scored':''}" id="c-${c.id}"><div class="crit-hd"><div class="crit-ico">${c.ico}</div><div class="crit-name">${c.name}</div><div class="crit-sc">${c.badge} · ${sel!==null?sel:'-'}/10</div></div><div class="opts">${c.opts.map(o=>`<div class="opt${sel===o.v?' sel':''}" data-crit="${c.id}" data-val="${o.v}"><div class="radio"></div><div style="flex:1"><div class="opt-lbl">${o.l}</div>${o.d?`<div class="opt-desc">${o.d}</div>`:''}</div><div class="opt-pts">${o.v}/10</div></div>`).join('')}</div></div>`;}).join('');
-  wrap.querySelectorAll('.opt').forEach(el=>{el.addEventListener('click',()=>{scores[el.dataset.crit]=Number(el.dataset.val);buildMaxCriteria();buildICB();checkMaxCTA();});});
+function buildMaxCrits(){
+  const wrap=document.getElementById('max-crits');
+  wrap.innerHTML=CRIT_MAX.map(c=>{
+    const sel=scores[c.id];
+    return '<div class="crit'+(sel!==null?' scored':'')+'" id="c-'+c.id+'"><div class="crit-hd"><div class="crit-ico">'+c.ico+'</div><div class="crit-name">'+c.name+'</div><div class="crit-sc">'+c.badge+' · '+(sel!==null?sel:'-')+'/10</div></div><div class="opts">'+c.opts.map(o=>'<div class="opt'+(sel===o.v?' sel':'')+'" data-crit="'+c.id+'" data-val="'+o.v+'"><div class="radio"></div><div style="flex:1"><div class="opt-lbl">'+o.l+'</div><div class="opt-desc">'+o.d+'</div></div><div class="opt-pts">'+o.v+'/10</div></div>').join('')+'</div></div>';
+  }).join('');
+  wrap.querySelectorAll('.opt').forEach(el=>{el.addEventListener('click',()=>{scores[el.dataset.crit]=Number(el.dataset.val);buildMaxCrits();buildICB();checkM();});});
 }
 function buildICB(){
   const sc=icbScore(),pt=pillarTotal();
-  document.getElementById('icb-badge').textContent=`ICB · ${sc}/10`;
+  document.getElementById('icb-badge').textContent='ICB · '+sc+'/10';
   document.getElementById('icb-card').className='crit'+(sc>0?' scored':'');
   const active=Object.entries(pillarsMax).filter(([,v])=>Number(v)>=15).length;
-  document.getElementById('icb-body').innerHTML=`<div class="pil-hint">Distribuye el 100% entre los pilares activos. Pilares con ≥15% = 2 pts c/u</div><div class="pil-rows">${PILLARS.map(p=>`<div class="pil-row"><div class="pil-name">${p}</div><input class="pil-inp" type="number" min="0" max="100" value="${pillarsMax[p]||0}" data-p="${p}"><div class="pil-sym">%</div></div>`).join('')}</div><div class="pil-total">Total: <span class="pn ${pt===100?'ok':pt>100?'over':''}">${pt}%</span> de 100% · ${active} pilares → ${sc}/10</div>`;
-  document.getElementById('icb-body').querySelectorAll('input').forEach(el=>{el.addEventListener('input',()=>{pillarsMax[el.dataset.p]=Math.max(0,Math.min(100,Number(el.value)||0));buildICB();checkMaxCTA();});});
+  document.getElementById('icb-body').innerHTML='<div class="pil-hint">Distribuye el 100% entre los pilares activos. Pilares con ≥15% = 2 pts c/u</div><div class="pil-rows">'+PILLARS.map(p=>'<div class="pil-row"><div class="pil-name">'+p+'</div><input class="pil-inp" type="number" min="0" max="100" value="'+(pillarsMax[p]||0)+'" data-p="'+p+'"><div class="pil-sym">%</div></div>').join('')+'</div><div class="pil-total">Total: <span class="pn '+(pt===100?'ok':pt>100?'over':'')+'">'+pt+'%</span> de 100% · '+active+' pilares → '+sc+'/10</div>';
+  document.getElementById('icb-body').querySelectorAll('input').forEach(el=>{el.addEventListener('input',()=>{pillarsMax[el.dataset.p]=Math.max(0,Math.min(100,Number(el.value)||0));buildICB();checkM();});});
 }
-function checkMaxCTA(){
-  const ok=document.getElementById('m-name').value.trim()&&document.getElementById('m-cat').value&&Object.values(scores).every(v=>v!==null)&&pillarTotal()===100;
-  document.getElementById('m-btn').disabled=!ok;
-}
-['m-name','m-cat','m-desc'].forEach(id=>{document.getElementById(id).addEventListener('input',checkMaxCTA);document.getElementById(id).addEventListener('change',checkMaxCTA);});
+function checkM(){const ok=document.getElementById('m-name').value.trim()&&document.getElementById('m-cat').value&&Object.values(scores).every(v=>v!==null)&&pillarTotal()===100;document.getElementById('m-btn').disabled=!ok;}
+['m-name','m-cat','m-desc'].forEach(id=>{const el=document.getElementById(id);el.addEventListener('input',checkM);el.addEventListener('change',checkM);});
 
 document.getElementById('m-btn').addEventListener('click',async()=>{
-  const btn=document.getElementById('m-btn');btn.disabled=true;btn.innerHTML='<span class="spin"></span>Analizando...';
-  const nm=document.getElementById('m-name').value.trim(),cat=document.getElementById('m-cat').value,desc=document.getElementById('m-desc').value.trim();
-  const sc=totalScoreMax(),lv=getLevel(sc),icb=icbScore();
+  const btn=document.getElementById('m-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Analizando...';
+  const nm=document.getElementById('m-name').value.trim();
+  const cat=document.getElementById('m-cat').value;
+  const desc=document.getElementById('m-desc').value.trim();
+  const icb=icbScore();
   const activePil=Object.entries(pillarsMax).filter(([,v])=>Number(v)>=15).map(([k])=>k);
-  const sys=`Eres el evaluador SEI de Acttiv para experiencias fuera del hotel en Canarias. Devuelve SOLO JSON sin markdown: {"narrative":"","improvement_plan":[{"criterion":"","action":"","impact":""}],"benchmark":[{"name":"","location":"","similarity":"","sei_reference":""}],"unique_advantage":""}. Máx 3 items por array. En español.`;
+  const totalSc=(scores.pvl||0)+(scores.eco||0)+(scores.aut||0)+icb+(scores.kno||0);
+  const lv=getLevel(totalSc);
+  const sys='Eres el evaluador SEI de Acttiv para experiencias fuera del hotel en Canarias. Devuelve SOLO JSON sin markdown: {"narrative":"","improvement_plan":[{"criterion":"","action":"","impact":""}],"benchmark":[{"name":"","location":"","similarity":"","sei_reference":""}],"unique_advantage":""}. Máx 3 items por array. En español.';
+  const msg=nm+' · '+cat+(desc?'\n'+desc:'')+'\nISE: '+totalSc+'/50 → '+lv.label+'\nPVL:'+scores.pvl+' IEL:'+scores.eco+' AUT:'+scores.aut+' ICB:'+icb+'('+activePil.join(',')+') TCA:'+scores.kno;
   let ai={};
   try{
-    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:1200,system:sys,messages:[{role:'user',content:`${nm} · ${cat}\n${desc?'Descripción: '+desc:''}\nISE: ${sc}/50 → ${lv.label}\nPVL:${scores.pvl} IEL:${scores.eco} AUT:${scores.aut} ICB:${icb}(${activePil.join(',')}) TCA:${scores.kno}`}]});
-    const d=await r.json();ai=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
-  }catch(e){ai={narrative:'Conecta a internet para el análisis completo.'};}
-  renderMaxResult({nm,cat,sc,lv,icb,ai});
+    const r=await apiCall({model:'claude-sonnet-4-6',max_tokens:1200,system:sys,messages:[{role:'user',content:msg}]});
+    const d=await r.json();
+    ai=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
+  }catch(e){ai={narrative:'Error: '+e.message};}
+  const bks=[{l:'Vinculación local',s:scores.pvl},{l:'Impacto económico',s:scores.eco},{l:'Autenticidad',s:scores.aut},{l:'Bienestar',s:icb},{l:'Transf. conocimiento',s:scores.kno}];
+  const impHTML=ai.improvement_plan&&ai.improvement_plan.length?'<div class="ai-box"><div class="ai-ttl">Plan de mejora</div>'+ai.improvement_plan.map(i=>'<div class="imp-item"><div class="imp-dot">📈</div><div><div class="imp-crit">'+i.criterion+'</div><div class="imp-act">'+i.action+'</div>'+(i.impact?'<div class="imp-pts">'+i.impact+'</div>':'')+'</div></div>').join('')+'</div>':'';
+  const benHTML=ai.benchmark&&ai.benchmark.length?'<div class="ai-box"><div class="ai-ttl">Benchmark</div>'+ai.benchmark.map(b=>'<div class="ben-item"><div style="flex:1"><div class="ben-name">'+b.name+' <span class="ben-loc">· '+b.location+'</span></div><div class="ben-sim">'+b.similarity+'</div></div>'+(b.sei_reference?'<div class="ben-sei">SEI ~'+b.sei_reference+'</div>':'')+'</div>').join('')+'</div>':'';
+  showResult('<div class="score-hero" style="background:'+lv.bg+';border:1px solid '+lv.border+'"><div style="font-size:26px;margin-bottom:8px">'+lv.emoji+'</div><div class="sc-num" style="color:'+lv.color+'">'+totalSc+'<span class="sc-den">/50</span></div><div class="sc-lv" style="color:'+lv.color+'">'+lv.label+'</div><div class="sc-ds" style="color:'+lv.color+'">'+lv.desc+'</div><div class="sc-nm">'+nm+' · '+cat+'</div></div><div class="bk-grid">'+bks.map(b=>'<div class="bk"><div class="bk-lbl">'+b.l+'</div><div class="bk-n" style="color:'+bc(b.s)+'">'+b.s+'<span class="bk-d">/10</span></div><div class="bk-bar"><div class="bk-fill" style="width:'+b.s*10+'%;background:'+bc(b.s)+'"></div></div></div>').join('')+'</div>'+(ai.narrative?'<div class="ai-box"><div class="ai-ttl">Análisis</div><div class="ai-txt">'+ai.narrative+'</div>'+(ai.unique_advantage&&ai.unique_advantage!='null'?'<div class="uniq">⭐ '+ai.unique_advantage+'</div>':'')+'</div>':'')+impHTML+benHTML+'<button class="reset" onclick="resetAll()">← Nueva evaluación</button>');
   btn.disabled=false;btn.innerHTML='Evaluar · análisis completo';
 });
-
-function renderMaxResult({nm,cat,sc,lv,icb,ai}){
-  const bks=[{l:'Vinculación local',b:'PVL',s:scores.pvl},{l:'Impacto económico',b:'IEL',s:scores.eco},{l:'Autenticidad',b:'AUT',s:scores.aut},{l:'Bienestar',b:'ICB',s:icb},{l:'Transf. conocimiento',b:'TCA',s:scores.kno}];
-  document.getElementById('v-form').style.display='none';
-  const rv=document.getElementById('v-result');rv.style.display='block';
-  rv.innerHTML=`<div class="score-hero" style="background:${lv.bg};border:1px solid ${lv.border}">
-    <div style="font-size:26px;margin-bottom:8px">${lv.emoji}</div>
-    <div class="sc-num" style="color:${lv.color}">${sc}<span class="sc-den">/50</span></div>
-    <div class="sc-lv" style="color:${lv.color}">${lv.label}</div>
-    <div class="sc-desc" style="color:${lv.color}">${lv.desc}</div>
-    <div class="sc-name">${nm} · ${cat}</div>
-  </div>
-  <div class="bk-grid">${bks.map(b=>`<div class="bk"><div class="bk-lbl">${b.l}</div><div class="bk-n" style="color:${barColor(b.s)}">${b.s}<span class="bk-d">/10</span></div><div class="bk-bar"><div class="bk-fill" style="width:${b.s*10}%;background:${barColor(b.s)}"></div></div></div>`).join('')}</div>
-  ${ai.narrative?`<div class="ai-box"><div class="ai-ttl">Análisis</div><div class="ai-txt">${ai.narrative}</div>${ai.unique_advantage&&ai.unique_advantage!='null'?`<div class="uniq">⭐ ${ai.unique_advantage}</div>`:''}</div>`:''}
-  ${ai.improvement_plan?.length?`<div class="ai-box"><div class="ai-ttl">Plan de mejora</div>${ai.improvement_plan.map(i=>`<div class="imp-item"><div class="imp-dot">📈</div><div><div class="imp-crit">${i.criterion}</div><div class="imp-act">${i.action}</div>${i.impact?`<div class="imp-pts">${i.impact}</div>`:''}</div></div>`).join('')}</div>`:''}
-  ${ai.benchmark?.length?`<div class="ai-box"><div class="ai-ttl">Benchmark</div>${ai.benchmark.map(b=>`<div class="ben-item"><div style="flex:1"><div class="ben-name">${b.name} <span class="ben-loc">· ${b.location||''}</span></div><div class="ben-sim">${b.similarity}</div></div>${b.sei_reference?`<div class="ben-sei">SEI ~${b.sei_reference}</div>`:''}</div>`).join('')}</div>`:''}
-  <button class="reset" onclick="resetAll()">← Evaluar otra experiencia</button>`;
-}
 
 // ── BATCH MODE ──
 document.querySelectorAll('.stab').forEach(b=>{
   b.addEventListener('click',()=>{
     srcMode=b.dataset.s;
     document.querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-    document.getElementById('src-url').style.display=srcMode==='url'?'':'none';
-    document.getElementById('src-pdf').style.display=srcMode==='pdf'?'':'none';
-    document.getElementById('src-text').style.display=srcMode==='text'?'':'none';
-    checkBatchCTA();
+    document.getElementById('src-url').style.display=srcMode==='url'?'block':'none';
+    document.getElementById('src-pdf').style.display=srcMode==='pdf'?'block':'none';
+    document.getElementById('src-text').style.display=srcMode==='text'?'block':'none';
+    checkB();
   });
 });
-
-function checkBatchCTA(){
+function checkB(){
   let ok=false;
   if(srcMode==='url')ok=document.getElementById('b-url').value.trim().length>5;
   else if(srcMode==='pdf')ok=batchFile!==null;
-  else if(srcMode==='text')ok=document.getElementById('b-text').value.trim().length>50;
+  else ok=document.getElementById('b-text').value.trim().length>50;
   document.getElementById('b-btn').disabled=!ok;
 }
+document.getElementById('b-url').addEventListener('input',checkB);
+document.getElementById('b-text').addEventListener('input',checkB);
 
-document.getElementById('b-url').addEventListener('input',checkBatchCTA);
-document.getElementById('b-text').addEventListener('input',checkBatchCTA);
-
-// File upload
 const dropArea=document.getElementById('drop-area');
-const fileInput=document.getElementById('file-input');
-dropArea.addEventListener('click',()=>fileInput.click());
-dropArea.addEventListener('dragover',e=>{e.preventDefault();dropArea.classList.add('dragover');});
-dropArea.addEventListener('dragleave',()=>dropArea.classList.remove('dragover'));
-dropArea.addEventListener('drop',e=>{e.preventDefault();dropArea.classList.remove('dragover');handleFile(e.dataTransfer.files[0]);});
-fileInput.addEventListener('change',()=>handleFile(fileInput.files[0]));
-document.getElementById('file-remove').addEventListener('click',()=>{batchFile=null;batchFileData=null;document.getElementById('file-preview').classList.remove('show');dropArea.style.display='';checkBatchCTA();});
-
+const fileInp=document.getElementById('file-inp');
+dropArea.addEventListener('click',()=>fileInp.click());
+dropArea.addEventListener('dragover',e=>{e.preventDefault();dropArea.style.borderColor='#E85D24';});
+dropArea.addEventListener('dragleave',()=>dropArea.style.borderColor='');
+dropArea.addEventListener('drop',e=>{e.preventDefault();dropArea.style.borderColor='';handleFile(e.dataTransfer.files[0]);});
+fileInp.addEventListener('change',()=>handleFile(fileInp.files[0]));
+document.getElementById('f-rem').addEventListener('click',()=>{batchFile=null;batchFileData=null;document.getElementById('fpreview').classList.remove('show');dropArea.style.display='';checkB();});
 function handleFile(file){
   if(!file)return;
   batchFile=file;
-  const isImg=file.type.startsWith('image/');
-  document.getElementById('file-ico').textContent=isImg?'🖼️':'📄';
-  document.getElementById('file-name').textContent=file.name;
-  document.getElementById('file-preview').classList.add('show');
+  document.getElementById('f-ico').textContent=file.type.startsWith('image/')?'🖼️':'📄';
+  document.getElementById('f-name').textContent=file.name;
+  document.getElementById('fpreview').classList.add('show');
   dropArea.style.display='none';
   const reader=new FileReader();
-  reader.onload=e=>{batchFileData=e.target.result.split(',')[1];checkBatchCTA();};
+  reader.onload=e=>{batchFileData=e.target.result.split(',')[1];checkB();};
   reader.readAsDataURL(file);
 }
 
-// BATCH EVALUATE
 document.getElementById('b-btn').addEventListener('click',async()=>{
   const btn=document.getElementById('b-btn');
-  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Extrayendo y evaluando...';
-  const context=document.getElementById('b-context').value.trim();
-
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Evaluando...';
+  const ctx=document.getElementById('b-ctx').value.trim();
+  const sys='Eres el evaluador SEI de Acttiv. Evalúa experiencias turísticas con la rúbrica SEI Exterior (5 criterios 0-10, total /50): PVL=vinculación local, IEL=impacto económico local, AUT=autenticidad de destino, ICB=bienestar (pilares×2pts), TCA=transferencia conocimiento. Devuelve SOLO JSON válido sin markdown: {"source_name":"fuente","experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase breve"}]}. Máximo 10 experiencias. En español.';
   let messages=[];
-  const sys=`Eres el evaluador SEI de Acttiv. Extrae y evalúa experiencias turísticas con la rúbrica SEI Exterior (5 criterios 0-10, total /50): PVL=vinculación local, IEL=impacto económico local, AUT=autenticidad de destino, ICB=bienestar (pilares×2), TCA=transferencia conocimiento. Devuelve SOLO JSON sin markdown: {"source_name":"fuente","total_found":0,"experiences":[{"name":"","category":"","pvl":0,"iel":0,"aut":0,"icb":0,"tca":0,"total":0,"level":"Referente|Comprometido|En proceso|Fuera","reason":"1 frase"}]}. Máximo 10 experiencias. En español.`;
-
   if(srcMode==='url'){
     const url=document.getElementById('b-url').value.trim();
-    messages=[{role:'user',content:`Basándote en tu conocimiento del catálogo de experiencias turísticas de esta fuente: ${url}\n${context?'Contexto adicional: '+context:''}\nGenera una evaluación SEI de las 10 experiencias más representativas que conoces de este catálogo o destino. Responde SOLO con el JSON solicitado.`}];
-  } else if(srcMode==='pdf'&&batchFileData){
+    messages=[{role:'user',content:'Usando tu conocimiento de las experiencias turísticas disponibles en: '+url+(ctx?'\nContexto: '+ctx:'')+'\nGenera evaluación SEI de las 10 experiencias más representativas. Responde SOLO con el JSON.'}];
+  }else if(srcMode==='pdf'&&batchFileData){
     const isImg=batchFile.type.startsWith('image/');
-    messages=[{role:'user',content:[
-      {type:isImg?'image':'document',source:{type:'base64',media_type:batchFile.type,data:batchFileData}},
-      {type:'text',text:`Extrae y evalúa todas las experiencias que encuentres en este ${isImg?'imagen':'documento'}.\n${context?'Contexto: '+context:''}`}
-    ]}];
-  } else {
+    messages=[{role:'user',content:[{type:isImg?'image':'document',source:{type:'base64',media_type:batchFile.type,data:batchFileData}},{type:'text',text:'Extrae y evalúa todas las experiencias de este '+(isImg?'imagen':'documento')+'.'+(ctx?'\nContexto: '+ctx:'')+'\nResponde SOLO con el JSON.'}]}];
+  }else{
     const txt=document.getElementById('b-text').value.trim();
-    messages=[{role:'user',content:`Extrae y evalúa todas las experiencias del siguiente catálogo:\n\n${txt}\n${context?'Contexto: '+context:''}`}];
+    messages=[{role:'user',content:'Extrae y evalúa las experiencias del siguiente catálogo:\n\n'+txt+(ctx?'\nContexto: '+ctx:'')+'\nResponde SOLO con el JSON.'}];
   }
-
-  let result={source_name:'Catálogo',total_found:0,experiences:[]};
+  let result={source_name:'Error',experiences:[]};
   try{
-    const r=await apiCall({model:'claude-haiku-4-5-20251001',max_tokens:1500,system:sys,messages});
+    const r=await apiCall({model:'claude-haiku-4-5-20251001',max_tokens:1500,system:sys,messages:messages});
     const d=await r.json();
-    const rawText=(d.content?.[0]?.text||'').replace(/```json|```/g,'').trim();
-    if(!rawText||!rawText.startsWith('{'))throw new Error('Respuesta IA: '+rawText.slice(0,120));
-    result=JSON.parse(rawText);
-  }catch(e){result={source_name:'Error',total_found:0,experiences:[],error:e.message};}
-  renderBatchResult(result);
+    const txt=(d.content?.[0]?.text||'').replace(/```json|```/g,'').trim();
+    if(!txt.startsWith('{'))throw new Error('Respuesta IA: '+txt.slice(0,100));
+    result=JSON.parse(txt);
+  }catch(e){result={source_name:'Error',experiences:[],error:e.message};}
+  renderBatch(result);
   btn.disabled=false;btn.innerHTML='Evaluar todas las experiencias';
 });
 
-function renderBatchResult(data){
+function renderBatch(data){
   const exps=data.experiences||[];
-  const sorted=[...exps].sort((a,b)=>b.total-a.total);
-  const ref=sorted.filter(e=>e.level==='Referente');
-  const com=sorted.filter(e=>e.level==='Comprometido');
-  const proc=sorted.filter(e=>e.level==='En proceso'||e.level==='Fuera');
+  const ref=exps.filter(e=>e.level==='Referente').sort((a,b)=>b.total-a.total);
+  const com=exps.filter(e=>e.level==='Comprometido').sort((a,b)=>b.total-a.total);
+  const low=exps.filter(e=>e.level==='En proceso'||e.level==='Fuera').sort((a,b)=>b.total-a.total);
 
-  document.getElementById('v-form').style.display='none';
-  const rv=document.getElementById('v-result');rv.style.display='block';
-
-  function card(e,i){
+  function kcard(e){
     const lv=getLevel(e.total||0);
-    return`<div style="background:#fff;border:1px solid #f0f0f0;border-radius:12px;padding:14px 15px;margin-bottom:10px;border-top:3px solid ${lv.color}">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px">${e.name}</div>
-          <div style="font-size:10.5px;color:#bbb">${e.category||''}</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-size:24px;font-weight:700;color:${lv.color};line-height:1">${e.total||0}</div>
-          <div style="font-size:9px;color:#bbb">/50</div>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:8px">
-        ${[{l:'PVL',s:e.pvl||0},{l:'IEL',s:e.iel||0},{l:'AUT',s:e.aut||0},{l:'ICB',s:e.icb||0},{l:'TCA',s:e.tca||0}].map(b=>`
-        <div style="background:#f9f9f9;border-radius:6px;padding:5px 4px;text-align:center">
-          <div style="font-size:8.5px;font-weight:700;color:#ccc;letter-spacing:.03em">${b.l}</div>
-          <div style="font-size:14px;font-weight:700;color:${barColor(b.s)};line-height:1.2">${b.s}</div>
-        </div>`).join('')}
-      </div>
-      ${e.reason?`<div style="font-size:11px;color:#888;line-height:1.55;border-top:1px solid #f5f5f5;padding-top:7px">${e.reason}</div>`:''}
-    </div>`;
+    return '<div class="kcard" style="border-top:3px solid '+lv.color+'">'
+      +'<div class="kcard-top"><div><div class="kcard-name">'+e.name+'</div><div class="kcard-cat">'+e.category+'</div></div><div><div class="kcard-score" style="color:'+lv.color+'">'+e.total+'<span class="kcard-den">/50</span></div></div></div>'
+      +'<div class="kcard-bars">'+[{l:'PVL',s:e.pvl||0},{l:'IEL',s:e.iel||0},{l:'AUT',s:e.aut||0},{l:'ICB',s:e.icb||0},{l:'TCA',s:e.tca||0}].map(b=>'<div class="kbar"><div class="kbar-lbl">'+b.l+'</div><div class="kbar-n" style="color:'+bc(b.s)+'">'+b.s+'</div></div>').join('')+'</div>'
+      +(e.reason?'<div class="kcard-reason">'+e.reason+'</div>':'')
+      +'</div>';
   }
 
-  function col(title,emoji,color,bg,items){
-    return`<div style="flex:1;min-width:0;background:${bg};border-radius:14px;padding:14px 12px">
-      <div style="display:flex;align-items:center;gap:7px;margin-bottom:14px">
-        <div style="font-size:16px">${emoji}</div>
-        <div style="font-size:13px;font-weight:700;color:${color}">${title}</div>
-        <div style="margin-left:auto;background:#fff;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700;color:${color}">${items.length}</div>
-      </div>
-      ${items.length?items.map((e,i)=>card(e,i)).join(''):`<div style="text-align:center;padding:20px 0;font-size:12px;color:#ccc">Sin experiencias</div>`}
-    </div>`;
+  function kcol(title,emoji,color,bg,items){
+    return '<div class="kcol" style="background:'+bg+'">'
+      +'<div class="kcol-hd"><span style="font-size:16px">'+emoji+'</span><span class="kcol-title" style="color:'+color+'">'+title+'</span><span class="kcol-count" style="color:'+color+'">'+items.length+'</span></div>'
+      +(items.length?items.map(kcard).join(''):'<div class="empty-col">Sin experiencias</div>')
+      +'</div>';
   }
 
-  rv.innerHTML=`
-  <div style="margin-bottom:18px">
-    <div style="font-size:20px;font-weight:700;margin-bottom:3px">${data.source_name||'Catálogo evaluado'}</div>
-    <div style="font-size:13px;color:#999">${exps.length} experiencias · SEI Exterior aproximado</div>
-  </div>
-  ${data.error?`<div style="background:#fff5f5;border:1px solid rgba(220,38,38,.2);border-radius:9px;padding:12px 14px;font-size:12px;color:#dc2626;margin-bottom:14px;font-family:monospace">${data.error}</div>`:''}
-  <div style="display:flex;gap:12px;align-items:flex-start">
-    ${col('Referente','⭐','#16a34a','rgba(22,163,74,0.07)',ref)}
-    ${col('Comprometido','🌍','#2E6B4F','rgba(46,107,79,0.07)',com)}
-    ${col('En proceso · Fuera','⚡','#d97706','rgba(217,119,6,0.07)',proc)}
-  </div>
-  <button class="reset" onclick="resetAll()" style="margin-top:18px">← Nueva evaluación</button>`;
+  const html='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:700;margin-bottom:3px">'+(data.source_name||'Catálogo')+'</div><div style="font-size:13px;color:#999">'+exps.length+' experiencias · SEI Exterior aproximado</div></div>'
+    +(data.error?'<div class="err-box">'+data.error+'</div>':'')
+    +'<div class="kanban">'
+    +kcol('Referente','⭐','#16a34a','rgba(22,163,74,0.07)',ref)
+    +kcol('Comprometido','🌍',GRM,'rgba(46,107,79,0.07)',com)
+    +kcol('En proceso · Fuera','⚡','#d97706','rgba(217,119,6,0.07)',low)
+    +'</div>'
+    +'<button class="reset" onclick="resetAll()">← Nueva evaluación</button>';
+  showResult(html);
 }
 
 // ── RESET ──
@@ -526,22 +435,13 @@ function resetAll(){
   scores={pvl:null,eco:null,aut:null,kno:null};
   pillarsMax={Social:0,Físico:0,Nutricional:0,Intelectual:0,Mental:0};
   batchFile=null;batchFileData=null;
-  ['q-name','q-cat','q-desc','m-name','m-cat','m-desc','b-url','b-text','b-context'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['q-name','q-cat','q-desc','m-name','m-cat','m-desc','b-url','b-text','b-ctx'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('q-btn').disabled=true;
   document.getElementById('b-btn').disabled=true;
-  document.getElementById('file-preview').classList.remove('show');
+  document.getElementById('fpreview').classList.remove('show');
   document.getElementById('drop-area').style.display='';
-  document.getElementById('v-result').style.display='none';
-  document.getElementById('v-form').style.display='block';
-  if(mode==='max'){buildMaxCriteria();buildICB();checkMaxCTA();}
-}
-
-function apiCall(body){
-  return fetch('/.netlify/functions/sei',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(body)
-  });
+  showForm();
+  if(mode==='max'){buildMaxCrits();buildICB();}
 }
 </script>
 </body>
