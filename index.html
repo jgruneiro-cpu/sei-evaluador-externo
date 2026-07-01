@@ -464,52 +464,61 @@ document.getElementById('b-btn').addEventListener('click',async()=>{
 
 function renderBatchResult(data){
   const exps=data.experiences||[];
-  const counts={ref:exps.filter(e=>e.level==='Referente').length,com:exps.filter(e=>e.level==='Comprometido').length,proc:exps.filter(e=>e.level==='En proceso').length,out:exps.filter(e=>e.level==='Fuera').length};
   const sorted=[...exps].sort((a,b)=>b.total-a.total);
+  const ref=sorted.filter(e=>e.level==='Referente');
+  const com=sorted.filter(e=>e.level==='Comprometido');
+  const proc=sorted.filter(e=>e.level==='En proceso'||e.level==='Fuera');
 
   document.getElementById('v-form').style.display='none';
   const rv=document.getElementById('v-result');rv.style.display='';
 
-  rv.innerHTML=`
-  <div style="margin-bottom:20px">
-    <div style="font-size:20px;font-weight:700;margin-bottom:4px">${data.source_name||'Catálogo evaluado'}</div>
-    <div style="font-size:13px;color:#888">${exps.length} experiencias · SEI Exterior aproximado</div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px">
-    <div style="background:#f0fdf4;border:1px solid rgba(22,163,74,.2);border-radius:11px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;color:#16a34a;line-height:1">${counts.ref}</div><div style="font-size:11px;color:#16a34a;font-weight:600;margin-top:4px">⭐ Referente</div></div>
-    <div style="background:rgba(46,107,79,.07);border:1px solid rgba(46,107,79,.2);border-radius:11px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;color:${GRM};line-height:1">${counts.com}</div><div style="font-size:11px;color:${GRM};font-weight:600;margin-top:4px">🌍 Comprometido</div></div>
-    <div style="background:#fffbeb;border:1px solid rgba(217,119,6,.2);border-radius:11px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;color:#d97706;line-height:1">${counts.proc}</div><div style="font-size:11px;color:#d97706;font-weight:600;margin-top:4px">⚡ En proceso</div></div>
-    <div style="background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.2);border-radius:11px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;color:#dc2626;line-height:1">${counts.out}</div><div style="font-size:11px;color:#dc2626;font-weight:600;margin-top:4px">✗ Fuera</div></div>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:10px">
-  ${sorted.map((e,i)=>{
+  function card(e,i){
     const lv=getLevel(e.total||0);
-    const sc=[{l:'PVL',s:e.pvl||0},{l:'IEL',s:e.iel||0},{l:'AUT',s:e.aut||0},{l:'ICB',s:e.icb||0},{l:'TCA',s:e.tca||0}];
-    return`<div style="background:#fff;border:1px solid #f0f0f0;border-radius:13px;padding:16px 18px;border-left:4px solid ${lv.color}">
-      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px">
-        <div style="font-size:11px;font-weight:700;color:#bbb;min-width:20px;padding-top:3px">${i+1}</div>
+    return`<div style="background:#fff;border:1px solid #f0f0f0;border-radius:12px;padding:14px 15px;margin-bottom:10px;border-top:3px solid ${lv.color}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">
         <div style="flex:1">
-          <div style="font-size:14px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px">${e.name}</div>
-          <div style="font-size:11.5px;color:#999">${e.category||''}</div>
+          <div style="font-size:13px;font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:2px">${e.name}</div>
+          <div style="font-size:10.5px;color:#bbb">${e.category||''}</div>
         </div>
         <div style="text-align:right;flex-shrink:0">
-          <div style="font-size:28px;font-weight:700;color:${lv.color};line-height:1">${e.total||0}<span style="font-size:13px;font-weight:400;color:#bbb">/50</span></div>
-          <div style="font-size:11px;font-weight:700;color:${lv.color};margin-top:2px">${lv.emoji} ${lv.label}</div>
+          <div style="font-size:24px;font-weight:700;color:${lv.color};line-height:1">${e.total||0}</div>
+          <div style="font-size:9px;color:#bbb">/50</div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:${e.reason?'10px':'0'}">
-        ${sc.map(b=>`<div style="background:#f9f9f9;border-radius:8px;padding:8px 6px;text-align:center">
-          <div style="font-size:9.5px;font-weight:700;color:#bbb;letter-spacing:.04em;margin-bottom:4px">${b.l}</div>
-          <div style="font-size:18px;font-weight:700;color:${barColor(b.s)};line-height:1">${b.s}</div>
-          <div style="height:3px;background:#efefef;border-radius:2px;margin-top:5px"><div style="height:3px;border-radius:2px;background:${barColor(b.s)};width:${b.s*10}%"></div></div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:8px">
+        ${[{l:'PVL',s:e.pvl||0},{l:'IEL',s:e.iel||0},{l:'AUT',s:e.aut||0},{l:'ICB',s:e.icb||0},{l:'TCA',s:e.tca||0}].map(b=>`
+        <div style="background:#f9f9f9;border-radius:6px;padding:5px 4px;text-align:center">
+          <div style="font-size:8.5px;font-weight:700;color:#ccc;letter-spacing:.03em">${b.l}</div>
+          <div style="font-size:14px;font-weight:700;color:${barColor(b.s)};line-height:1.2">${b.s}</div>
         </div>`).join('')}
       </div>
-      ${e.reason?`<div style="font-size:12px;color:#666;line-height:1.6;padding-top:10px;border-top:1px solid #f5f5f5">${e.reason}</div>`:''}
+      ${e.reason?`<div style="font-size:11px;color:#888;line-height:1.55;border-top:1px solid #f5f5f5;padding-top:7px">${e.reason}</div>`:''}
     </div>`;
-  }).join('')}
+  }
+
+  function col(title,emoji,color,bg,items){
+    return`<div style="flex:1;min-width:0;background:${bg};border-radius:14px;padding:14px 12px">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:14px">
+        <div style="font-size:16px">${emoji}</div>
+        <div style="font-size:13px;font-weight:700;color:${color}">${title}</div>
+        <div style="margin-left:auto;background:#fff;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700;color:${color}">${items.length}</div>
+      </div>
+      ${items.length?items.map((e,i)=>card(e,i)).join(''):`<div style="text-align:center;padding:20px 0;font-size:12px;color:#ccc">Sin experiencias</div>`}
+    </div>`;
+  }
+
+  rv.innerHTML=`
+  <div style="margin-bottom:18px">
+    <div style="font-size:20px;font-weight:700;margin-bottom:3px">${data.source_name||'Catálogo evaluado'}</div>
+    <div style="font-size:13px;color:#999">${exps.length} experiencias · SEI Exterior aproximado</div>
   </div>
-  ${data.error?`<div style="background:#fff5f5;border:1px solid rgba(220,38,38,.2);border-radius:9px;padding:12px 14px;font-size:12.5px;color:#dc2626;margin:12px 0;font-family:monospace">${data.error}</div>`:''}
-  <button class="reset" onclick="resetAll()" style="margin-top:16px">← Nueva evaluación</button>`;
+  ${data.error?`<div style="background:#fff5f5;border:1px solid rgba(220,38,38,.2);border-radius:9px;padding:12px 14px;font-size:12px;color:#dc2626;margin-bottom:14px;font-family:monospace">${data.error}</div>`:''}
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    ${col('Referente','⭐','#16a34a','rgba(22,163,74,0.07)',ref)}
+    ${col('Comprometido','🌍','#2E6B4F','rgba(46,107,79,0.07)',com)}
+    ${col('En proceso · Fuera','⚡','#d97706','rgba(217,119,6,0.07)',proc)}
+  </div>
+  <button class="reset" onclick="resetAll()" style="margin-top:18px">← Nueva evaluación</button>`;
 }
 
 // ── RESET ──
